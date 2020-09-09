@@ -1,11 +1,6 @@
 Introduction
 ############
 
-Follow me 
-`@Twitter <http://twitter.com/ashuklax>`_
-`@LinkedIn <https://www.linkedin.com/in/ashuklax>`_
-`@GitHub <https://github.com/AmitXShukla>`_
-`@Medium Blogs <https://medium.com/@Amit_Shukla>`_
 
 Objective
 ^^^^^^^^^

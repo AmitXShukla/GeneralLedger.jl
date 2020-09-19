@@ -17,7 +17,8 @@ CurrentModule = GeneralLedger
 
 ### Objective
 GeneralLedger.jl provide a complete Data Science Framework for Finance Data Analytics.
-Scope of this package includes General Ledger, Sub-Ledgers, Accounting Analytics & Data Science operations using [![JuliaLang](images/julia.png)](https://julialang.org) language.
+Scope of this package includes General Ledger, Sub-Ledgers, Accounting Analytics & Data Science operations using [![JuliaLang](images/julia.png)](https://julialang.org) language. GeneralLedger.jl supports analytics using structured data from ERP systems like
+Oracle, PeopleSoft, SAP, Tally, Intuit, QuickBooks etc.
 
 ## Tutorials
 

@@ -10,14 +10,33 @@ Scope of this package includes General Ledger, sub-ledgers, accounting Analytics
 <a href="https://julialang.org/"><img src="https://julialang.org/assets/infra/logo.svg" alt="The Julia Lang" width="40"/></a> language.
 
 
-This package will support all computations for a complete Procure_to_Pay life cycle operation.
+In future, This package will support all data science computations for a complete Procure_to_Pay life cycle operations.
 i.e. Orders -> Requestions -> Procurement -> Inventory cycle counting -> Match Exceptions -> Receivables -> Accounts Payables/Billing -> GL Accounting -> General Ledger book keeping.
 
-Finance sub-ledger/accounting entries are necessary to accurately predict/analyze complete General Ledger functonalities.
+Finance General Ledger sits at core and supporting sub-ledger/accounting entries/details are necessary to accurately predict/analyze complete General Ledger functonalities.
 
 note -> all sub-ledger/domain specific account will be covered in their own domains like AccountsPayables.jl, AccountsReceivables.jl, Procurement.jl etc.
 
 ```
-This project is Open for funding/sponsorship.
+This project is open for funding/sponsorship.
 email: amit@elishconsulting.com
 ```
+
+## Development plan:
+
+- Structs
+- Data loading methods  HIVE, RDBMS, File, WebScraping, PDF Excel- has video
+- analysis methods- has video
+- visualizaiton methods- has video
+- visualize plotting methods MAs, Mean, Stat etc. + 3D plots- has video
+- Data filling - missing dates- has video
+- Time Series- has video
+- Data cleansing methods- has video
+- Data mining -
+- Tree Flatteners methods
+- Data online stat
+- Probability methods
+- Null Hypothersis, p value- has video
+- Flux/Turing .jl
+- Light Graphs
+

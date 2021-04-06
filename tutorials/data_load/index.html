@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>- · General Ledger</title><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit">General Ledger</span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">General Ledger</a></li><li><a class="tocitem" href="../data_analysis/">-</a></li><li><a class="tocitem" href="../data_feature/">-</a></li><li class="is-active"><a class="tocitem" href>-</a></li><li><a class="tocitem" href="../data_ml/">-</a></li><li><a class="tocitem" href="../data_prep/">-</a></li><li><a class="tocitem" href="../data_visual/">-</a></li><li><a class="tocitem" href="../introduction/">Introduction</a></li><li><a class="tocitem" href="../markdown_samples/">Heading One</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>-</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>-</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/AmitXShukla/GeneralLedger.jl/blob/master/docs/src/tutorials/data_load.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><p>Data Loading ############</p><p>Objective ^^^^^^^^^ In this section, We will discuss, different ways to read, store different kinds of Data.</p><p>In real world, most of Big/small Organizations use ERP Systems like SAP, Oracle, PeopleSoft, Intuit, MS SQL/Access/SQL Server etc. to store Summary, Detail &amp; Sub Ledgers in ERP systems. These ERP systems store Giga/Peta Bytes of GL data in RDBMS tables and mostly in highly structured data format.</p><p>using Python ^^^^^^^^^^^^</p><ol><li>NumPy, Pandas DataFrame is one of the recommended way to load and read CSV, XLSX or Website data.</li><li>VAEX, PyTables or PYSPARK are few other recommended approaches to store high volume, highly structured data.</li></ol><p>using Julia ^^^^^^^^^^^</p><ol><li>Julia DataFrame is one of the recommended way to load and read CSV, XLSX or Website data.</li><li>JuliaDB is other approach recommended to store high volume, highly structured data.</li></ol><p>using CSV ^^^^^^^^^ .. content-tabs::</p><pre><code class="language-none">.. tab-container:: Python
+    :title: Python
+
+    .. code-block:: Python
+        :linenos:
+
+        import numpy as np
+        import pandas as pd
+        df = DataFrame(a=3, b=5)
+        df.a
+        df[:,:a]
+
+.. tab-container:: Julia
+    :title: Julia
+
+    .. code-block:: Julia
+        :linenos:
+
+        using Pkg           # load Pkg
+        Pkg.add(&quot;CSV&quot;)      # add CSV package
+        using CSV           # load CSV
+        df = CSV.           # hit TAB to see all available methods
+        
+        # before you jump on loading CSV file, always count rows in CSV.
+
+        (open(&quot;./Ledger.csv&quot;) |&gt; readlines |&gt; length) -1 # use readlines if file is clean format
+        
+        function rowcountcsv(file)    # write a generic funciton to readlines in a file (not so clean files)
+            rowCount = 0
+            for row in CSV.Rows(file; resusebuffer=true)
+                rowCount += 1
+            end
+            return rowCount
+        end
+        
+        rowcountcsv(&quot;./Ledger.csv&quot;) # count # of lines in CSV
+
+        # OMG, you don&#39;t want to print 100,000 lines from a big CSV file, but if you do...
+        for row in CSV.File(&quot;./Ledger.csv&quot;)
+            println(&quot;a=$(row.a), b=$(row.b), c=$(row.c)&quot;)
+        end
+
+        #### APPROACH - 1 ####
+        #### let&#39;s load this CSV into a DataFrame ####
+        using DataFrames
+        df = CSV.File(&quot;./Ledger.csv&quot;) |&gt; DataFrame!
+
+        #### APPROACH - 2 ####
+        # load a csv file directly into an sqlite database table
+        using Pkg
+        Pkg.add(&quot;SQLite&quot;)
+        db = SQLite.DB()
+        tbl = CSV.File(&quot;./Ledger.csv&quot;) |&gt; SQLite.load!(db, &quot;ledger_table&quot;)
+
+        #### APPROACH - 3 ####
+        #### loading data into JuliaDB ####
+        using Pkg
+        Pkg.add(&quot;JuliaDB&quot;)
+        Pkg.add(&quot;Distributed&quot;)
+        Pkg.add(&quot;OnlineStats&quot;)
+
+        using JuliaDB
+        using Distributed
+        using OnlineStats
+        addprocs(4)
+
+        @everywhere using JuliaDB, OnlineStats
+        files = glob(&quot;*.csv&quot;, &quot;Ledger&quot;) # load all csvs at once in directory
+
+        t = loadtable(files, filenamecol=:DBLedger) #DBLedger becomes one of column in this table
+        groupreduce(Mean(), t, :DBLedger; select=:BALANCE) # assuming Ledger.csv has a column BALANCE</code></pre><p>using DOWNLOAD ^^^^^^^^^^^^^^</p><p>using XLSX ^^^^^^^^^^</p><p>using ODBC ^^^^^^^^^^</p><p>using JDBC ^^^^^^^^^^</p><p>using HIVE ^^^^^^^^^^</p><p>using Website ^^^^^^^^^^^^^</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../data_feature/">« -</a><a class="docs-footer-nextpage" href="../data_ml/">- »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Monday 8 February 2021 06:11">Monday 8 February 2021</span>. Using Julia version 1.5.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

@@ -42,7 +42,7 @@ Pages = ["lib/public.md"]
 Finance sub-ledger/accounting entries (i.e. ProcureToPay) are necessary to accurately predict/analyze complete General Ledger functonalities at organizaion level.
 !!! note "Procure to Pay!"
 
-    This package will support all Finance analytical computations for a complete Procure_to_Pay life cycle operation from big ERP systems like
+    This package supports all Finance analytical computations for a complete Procure_to_Pay life cycle operation from big ERP systems like
     Oracle, PeopleSoft, SAP, Tally, Intuit, QuickBooks etc.
 
     I will cover examples from ERP Domains like GL (General Ledger), AP (Accounts Payable), AR (Account Receivables), B2P (Buy to Pay), Expense, Travel & Time, HCM Human Capital Management, CRM etc.

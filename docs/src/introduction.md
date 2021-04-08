@@ -13,7 +13,7 @@ Each notebook will introduce and help us learn a new AI/ML/DL concept by actuall
 
 ---
 
-### What is General Ledger
+#### What is General Ledger
 GL serves as core of any Financial Management system.
 
 It's objective is to keep detail and summary accounting information and produce numerous financial reports for your organization.
@@ -22,16 +22,16 @@ Often Small businesses see GL as Luxury item and think, it’s only useful for B
 
 So having a system to read, write and understand your financials books brings extraordinary benefits to any size of business.
 
-### Technical Analysis
+#### Technical Analysis
 
 is the process of forecasting future Organization growth or stock prices based on studying (using advance charting and applying mathematical formulas) past stock prices and trading volume.
 
 Technical analysis strongly believes that at any given point of time, stock price and trading volume reflects it current value and charting accurately captures all factors which can cause upwards or downwards stock prices movement.
 
-### Fundamental Analysis
+#### Fundamental Analysis
 is the process of forecasting future Organization growth or stock prices based on studying company financial statements like Income Statements, Cash Flow and Balance Sheets.
 
-### Techno-Fundamental Analysis
+#### Techno-Fundamental Analysis
 In this notebook and all my follow-up GL notebooks, I am proposing 3rd type of analysis.
 
 With the use of Machine Learning, I want to apply technical analysis /ML algorithms to GL and SUB Ledger (accounting entries) Books.
@@ -56,7 +56,7 @@ In these articles, I’m sharing very high level AI notebooks to understand and 
 
 ---
 
-### Data Science steps
+#### Data Science steps
 
 Step 1: Gather Data
   * Cash Flow Statements

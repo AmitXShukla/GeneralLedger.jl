@@ -2,9 +2,32 @@
 CurrentModule = GeneralLedger
 ```
 
-# General Ledger
-### ML for GL 
-**Machine Learning for General Ledger**
+### ML for GL - Machine Learning for General Ledger
+
+## Objective
+GeneralLedger.jl provide a complete Data Science Framework for Finance Data Analytics.
+
+	documentation is work in progress and is updated every Friday 6pm PST.
+
+Scope of this package includes General Ledger, Sub-Ledgers, Accounting Analytics & Data Science operations using [![JuliaLang](images/julia.png)](https://julialang.org) language. GeneralLedger.jl supports analytics using structured data from ERP systems like
+Oracle, PeopleSoft, SAP, Tally, Intuit, QuickBooks etc.
+
+Finance General Ledger sits at core of ERP systems and supporting sub-ledger/accounting entries/details are necessary to accurately predict/analyze complete General Ledger functionalities.
+
+note -> all sub-ledger/domain specific account will be covered in their own domains like [Buy2Pay.jl](https://github.com/AmitXShukla/Buy2Pay.jl/), [TaxAnalytics.jl](https://github.com/AmitXShukla/TaxAnalytics.jl/)
+
+!!! note "GeneralLedger.jl"
+
+    This package supports all Finance analytical computations for a complete Buy_to_Pay life cycle operation from big ERP systems like
+    Oracle, PeopleSoft, SAP, Tally, Intuit, QuickBooks etc.
+
+    I will cover examples from ERP Domains like GL (General Ledger), AP (Accounts Payable), AR (Account Receivables), B2P (Buy to Pay), Expense, Travel & Time, HCM Human Capital Management, CRM etc.
+
+    Requestions -> Orders -> Procurement -> Inventory cycle counting -> Match Exceptions -> Receivables -> Accounts Payables/Billing/Liability -> GL Accounting -> General Ledger book keeping.
+
+    Future work : - All sub-ledger/domain specific account will be covered in their own domains like AccountsPayables.jl, AccountsReceivables.jl, Procurement.jl etc.
+
+---
 
 > This project is accepting funding/sponsorship proposals.
 [![GitHub](images/github.png)](https://github.com/AmitXShukla)
@@ -15,38 +38,21 @@ CurrentModule = GeneralLedger
 
 ---
 
-### Objective
-GeneralLedger.jl provide a complete Data Science Framework for Finance Data Analytics.
-Scope of this package includes General Ledger, Sub-Ledgers, Accounting Analytics & Data Science operations using [![JuliaLang](images/julia.png)](https://julialang.org) language. GeneralLedger.jl supports analytics using structured data from ERP systems like
-Oracle, PeopleSoft, SAP, Tally, Intuit, QuickBooks etc.
+## Table of Contents
 
+```@contents
+Pages = ["introduction.md"]
+```
 ## Tutorials
-
 ```@contents
-Pages = ["tutorials/introduction.md", "tutorials/data_analysis.md"]
-Depth = 3
+Pages = ["tutorials/installation.md", "tutorials/aboutgl.md"]
 ```
 
-## Manual
+## Manual/API
 
-```@contents
-Pages = ["tutorials/introduction.md", "tutorials/data_analysis.md"]
-```
 
 ### [Index](@id main-index)
 
 ```@index
 Pages = ["lib/public.md"]
 ```
-
-Finance sub-ledger/accounting entries (i.e. ProcureToPay) are necessary to accurately predict/analyze complete General Ledger functonalities at organizaion level.
-!!! note "Procure to Pay!"
-
-    This package supports all Finance analytical computations for a complete Procure_to_Pay life cycle operation from big ERP systems like
-    Oracle, PeopleSoft, SAP, Tally, Intuit, QuickBooks etc.
-
-    I will cover examples from ERP Domains like GL (General Ledger), AP (Accounts Payable), AR (Account Receivables), B2P (Buy to Pay), Expense, Travel & Time, HCM Human Capital Management, CRM etc.
-
-    Requestions -> Orders -> Procurement -> Inventory cycle counting -> Match Exceptions -> Receivables -> Accounts Payables/Billing/Liability -> GL Accounting -> General Ledger book keeping.
-
-    Future work : - All sub-ledger/domain specific account will be covered in their own domains like AccountsPayables.jl, AccountsReceivables.jl, Procurement.jl etc.

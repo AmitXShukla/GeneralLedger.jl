@@ -13,10 +13,8 @@ Scope of this package includes Finance General Ledger, sub-ledgers, accounting e
 In future, This package will support all data science computations for a complete Buy2Pay, Order2Cash, including Procurement life cycle business operations.
 i.e. Orders -> Requestions -> Procurement -> Inventory cycle counting -> Match Exceptions -> Receivables -> Accounts Payables/Billing -> GL Accounting -> General Ledger book keeping.
 
-[Buy2Pay.jl](https://github.com/AmitXShukla/Buy2Pay.jl/)
-[TaxAnalytics](https://github.com/AmitXShukla/TaxAnalytics.jl/)
-
 ```
+*Related work:* [Buy2Pay.jl](https://github.com/AmitXShukla/Buy2Pay.jl/) [TaxAnalytics](https://github.com/AmitXShukla/TaxAnalytics.jl/)
 
 Finance General Ledger sits at core of ERP systems and supporting sub-ledger/accounting entries/details are necessary to accurately predict/analyze complete General Ledger functionalities.
 

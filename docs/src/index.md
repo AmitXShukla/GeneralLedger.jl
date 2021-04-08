@@ -45,7 +45,7 @@ Pages = ["introduction.md"]
 ```
 ## Tutorials
 ```@contents
-Pages = ["tutorials/installation.md", "tutorials/aboutgl.md"]
+Pages = ["tutorials/installation.md", "tutorials/aboutgl.md", "tutorials/glprocesses.md", "tutorials/erd.md", "tutorials/elt.md", "tutorials/selfservice.md", "tutorials/plots.md", "tutorials/analytic.md", "tutorials/timeseries.md", "tutorials/mlforgl.md", "tutorials/dlforgl.md", "tutorials/graph.md" ]
 ```
 
 ## Manual/API

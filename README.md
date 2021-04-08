@@ -55,4 +55,4 @@ email: amit@elishconsulting.com
 
 ![GL Processes](https://github.com/AmitXShukla/AmitXShukla.github.io/raw/master/blogs/PlutoCon/gl.png)
 
-![GL ERD)(https://github.com/AmitXShukla/AmitXShukla.github.io/raw/master/blogs/PlutoCon/gl_erd.png)
+![GL ERD](https://github.com/AmitXShukla/AmitXShukla.github.io/raw/master/blogs/PlutoCon/gl_erd.png)

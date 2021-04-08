@@ -14,11 +14,10 @@ In future, This package will support all data science computations for a complet
 i.e. Orders -> Requestions -> Procurement -> Inventory cycle counting -> Match Exceptions -> Receivables -> Accounts Payables/Billing -> GL Accounting -> General Ledger book keeping.
 
 ```
-*Related work:* [Buy2Pay.jl](https://github.com/AmitXShukla/Buy2Pay.jl/) [TaxAnalytics](https://github.com/AmitXShukla/TaxAnalytics.jl/)
 
 Finance General Ledger sits at core of ERP systems and supporting sub-ledger/accounting entries/details are necessary to accurately predict/analyze complete General Ledger functionalities.
 
-note -> all sub-ledger/domain specific account will be covered in their own domains like Buy2Pay.jl, TaxAnalytics.jl etc.
+note -> all sub-ledger/domain specific account will be covered in their own domains like [Buy2Pay.jl](https://github.com/AmitXShukla/Buy2Pay.jl/) [TaxAnalytics.jl](https://github.com/AmitXShukla/TaxAnalytics.jl/)
 
 ## using Pluto, Julia in Finance Supply Chain ERP systems as Business Intelligence Analytics, Prediction Analytics Reporting Tool
 

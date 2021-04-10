@@ -1,0 +1,54 @@
+# Installing Julia Environment
+
+It takes less than one minute to setup Julia environment on any machine, So I'm sharing few other possible installation methods to setup your local machine, remote VMs or mobile devices for Julia computing.
+
+Please chose any of the below methods depending on your available resources you would like to setup Julia environment for General Ledger data analysis.
+
+**iPad is next computer** and [![Julia Language](../images/julia.png)](https://julialang.org) is next big thing in high speed parallel, distributed & asynchronous numerical computing. 
+
+In this blog, I'm sharing, how I setup my iPad as primary developer machine to run heavy data science numerical computing over cloud VMs.
+
+**how to install & access Julia, Jupyter, Pluto, VSCode on local & Cloud VMs.**
+
+*These hacks are for people like me, who wake up middle of night and expect a Julia notebook ready in less than 10 seconds on their mobile device.*
+
+**Topics**
+1. how to install Julia on local windows, mac, linux
+2. how to install Julia on Cloud Windows VM
+3. how to install Julia on Cloud Linux VM
+4. run Julia REPL on Cloud Windows, Linux VMs through SSH client
+5. run Pluto or Jupyter notebooks on VM servers and access from remote Browser, iPad or Android tablets
+6. use GitHub to sync your work
+7. run VS Code on iPad/Tablet devices
+8. Understanding Julia Project, Application, Environment, Package
+---
+
+
+## how to install Julia on local windows, mac, linux
+
+it takes less than one minute to install and start with Julia.
+
+[click here to download Julia Language binaries](https://julialang.org/downloads/)
+
+
+Extract zip file contents to any folder on your local machine and change Windows/Mac/Linux environment variables/system Path to find Julia.exe on this folder.
+
+*for example*
+
++ Windows
+	$env:PATH
+	C:\amit\julia-1.5.2\bin
+
++ Linux/mac
+	export PATH=$PATH:/place/with/the/julia-1.5.2/bin
+    
+![Windows environment variable](../images/windows_env.png)
+
++ now open a terminal window and type
+	julia
+
+if all is well, you should have a working Julia session as shown below
+
+![Julia Terminal window](../images/julia_prompt.png)
+
+---

@@ -20,7 +20,7 @@ It's objective is to keep detail and summary accounting information and produce 
 
 Often Small businesses see GL as Luxury item and think, it’s only useful for Big organizations. However, Even Big Organization operate in small units and merge into to Corporate Ledger.
 
-So having a system to read, write and understand your financials books brings extraordinary benefits to any size of business.
+So having a system to read, write and understand your Finance books brings extraordinary benefits to any size of business.
 
 #### Technical Analysis
 
@@ -52,7 +52,7 @@ B. Using ML Algorithms to predict Growth/Stock Prices or Organization growth is 
 However, it is incredibly difficult to do this kind of analysis because
 Huge ERP systems are difficult to maintain, and it takes a village to read, write and understand Big Financial data in an organization and apply any ML or non-ML logic/algorithm.
 
-In these articles, I’m sharing very high level AI notebooks to understand and get you started with General Ledger and Machine Learning.
+In following chapters, I’ll share very high level AI notebooks to understand and get you started with General Ledger, Data Science operations and Machine Learning.
 
 ---
 
@@ -79,4 +79,3 @@ Step 7: Predict / Regression
 
 Step 8: Score Prediction
 
-Let's get started...

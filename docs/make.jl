@@ -9,6 +9,7 @@ makedocs(sitename="GeneralLedger.jl",
 				  "About GL" => "tutorials/aboutgl.md"
 				  "GL Processes" => "tutorials/glprocesses.md"
 				  "ERD" => "tutorials/erd.md"
+				  "Installing Julia" => "tutorials/installation.md"
 				  "ELT vs ETL" => "tutorials/elt.md"
 				  "Self-Service Data Analytic" => "tutorials/selfservice.md"
 				  "Visualizations, Buttons, sliders, filters, n-D plots, plots vs graphs" => "tutorials/plots.md"

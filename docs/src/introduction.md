@@ -4,7 +4,7 @@
 
 In following chapters, We will work through Data Science, Machine Learning and Deep Learning concepts.
 
-Each notebook will introduce and help us learn a new AI/ML/DL concept by actually doing it with real-life examples. These blog's target audience and projects are focused on Small, Medium and Large Enterprise ERP Systems.
+Each chapter will introduce and help us learn a new Data Science AI/ML/DL concept for Finance by actually doing it with real-life examples. These blog's target audience and projects are focused on Small, Medium and Large Enterprise ERP Systems.
 
 !!! note "ERP systems!"
     
@@ -53,29 +53,4 @@ However, it is incredibly difficult to do this kind of analysis because
 Huge ERP systems are difficult to maintain, and it takes a village to read, write and understand Big Financial data in an organization and apply any ML or non-ML logic/algorithm.
 
 In following chapters, I’ll share very high level AI notebooks to understand and get you started with General Ledger, Data Science operations and Machine Learning.
-
----
-
-#### Data Science steps
-
-Step 1: Gather Data
-  * Cash Flow Statements
-  * Income Statements
-  * Balance Sheets
-  * Market data (like geography, news, market trend, jobs etc)
-  * Stock prices
-
-Step 2: Prepare/Clean Data
-
-Step 3: Visualize Data
-
-Step 4: Identify features
-
-Step 5: Identify Labels/Regression Values or Prediction
-
-Step 6: Train Model
-
-Step 7: Predict / Regression
-
-Step 8: Score Prediction
 

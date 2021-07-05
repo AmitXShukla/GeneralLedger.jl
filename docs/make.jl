@@ -1,8 +1,8 @@
-push!(LOAD_PATH,"../src/")
+push!(LOAD_PATH, "../src/")
 using Documenter, GeneralLedger
 
 makedocs(sitename="GeneralLedger.jl",
-	  pages = [
+	  pages=[
 		   "Objective" => "index.md"
 		   "Introduction" => "introduction.md"
 		   "Tutorials" => [
@@ -19,5 +19,6 @@ makedocs(sitename="GeneralLedger.jl",
 				  "DL for GL" => "tutorials/dlforgl.md"
 				  "Graph Theory / Network Science" => "tutorials/graph.md"
 				  ]
+			"API" => "api.md"
 		   ],
 	  )

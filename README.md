@@ -1,8 +1,6 @@
 # GeneralLedger.jl
 # ML for GL - Machine Learning for General Ledger
 
-## Work in progress - please DO NOT clone this repository ##
-
 [Documentation](https://amitxshukla.github.io/GeneralLedger.jl/)
 
 ## Objective 
@@ -10,16 +8,14 @@ Machine learning for General Ledger provide a complete Data Science framework fo
 Scope of this package includes Finance General Ledger, sub-ledgers, accounting entries analytics and complex Data Science operations using The <a href="https://julialang.org/"><img src="https://julialang.org/assets/infra/logo.svg" alt="The Julia Lang" width="40"/></a> language.
 
 ```
-In future, This package will support all data science computations for a complete Buy2Pay, Order2Cash, including Procurement life cycle business operations.
+In future, This package will support all data science computations for a complete Procure2Pay, Order2Cash, including Procurement life cycle business operations.
 i.e. Orders -> Requestions -> Procurement -> Inventory cycle counting -> Match Exceptions -> Receivables -> Accounts Payables/Billing -> GL Accounting -> General Ledger book keeping.
 
 ```
 
 Finance General Ledger sits at core of ERP systems and supporting sub-ledger/accounting entries/details are necessary to accurately predict/analyze complete General Ledger functionalities.
 
-note -> all sub-ledger/domain specific account will be covered in their own domains like [Buy2Pay.jl](https://github.com/AmitXShukla/Buy2Pay.jl/) [TaxAnalytics.jl](https://github.com/AmitXShukla/TaxAnalytics.jl/)
-
-## using Pluto, Julia in Finance Supply Chain ERP systems as Business Intelligence Analytics, Prediction Analytics Reporting Tool
+note -> all sub-ledger/domain specific account will be covered in their own domains like [Procure2Pay.jl](https://github.com/AmitXShukla/Procure2Pay.jl/) [TaxAnalytics.jl](https://github.com/AmitXShukla/TaxAnalytics.jl/)
 
 Package [Documentation](https://amitxshukla.github.io/GeneralLedger.jl/) include tutorials, example Pluto notebooks,
 how Julia with Pluto as an Enterprise Reporting tool provide a cohesive data platform for **real-time, reactive/observable, ad-hoc and analytical, predictive analytics** reporting for ERP systems.
@@ -37,6 +33,17 @@ Julia language provide a range of packages suitable for  data loading, data wran
 This project is open for funding/sponsorship.
 email: amit@elishconsulting.com
 ```
+
+	next planned release: v0.20 Aug 26, 2021.
+    planned feature requests:
+        v0.20 Bug fixes, enhance ELT, ETL Datawarehouse support
+        v0.30 real time Visualizations
+        v0.30 real time null hypothesis
+        v0.40 Light Graphs/Network science analysis
+        v0.60 Blockchain distributed ledger
+        v0.70 bug fixes
+        v1.00 final stable release
+
 
 ## Development plan:
 - Introduction

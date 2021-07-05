@@ -19,9 +19,6 @@ showing images with link
 [![alternative image text](../images/youtube.png)](https://url.com)
 
 
-
-numbered footnote [^1] and a named one [^named]
-
 # Heading One
 ## Heading Two
 ### Heading Three

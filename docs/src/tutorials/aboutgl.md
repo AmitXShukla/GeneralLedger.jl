@@ -1,6 +1,5 @@
 # About General Ledger
 
-
 ## what is General Ledger
 
 GL serves as core of any Financial Management system.

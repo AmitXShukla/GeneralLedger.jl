@@ -18,6 +18,7 @@ makedocs(sitename="GeneralLedger.jl",
 				  "ML for GL" => "tutorials/mlforgl.md"
 				  "DL for GL" => "tutorials/dlforgl.md"
 				  "Graph Theory / Network Science" => "tutorials/graph.md"
+				  "NLP for GL" => "tutorials/nlp.md"
 				  ]
 			"API" => "api.md"
 		   ],

@@ -1,0 +1,5 @@
+user=username
+pwd=password
+dsn=userdsnname
+hive=hdinsightstr
+port=portnumber

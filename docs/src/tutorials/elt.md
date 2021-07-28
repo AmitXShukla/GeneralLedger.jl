@@ -24,7 +24,7 @@ This is what I meant earlier by saying handle with care and delicacy.
 ``` Inheriting behavior is much more important than being able to inherit structure.```
 
 Just to give an example,
-Normally, we ingest all vendor tables/transactions into a Date warehouse or Data lake or any self-service environment, and then let SMEs run meaningful analytics on it.
+Normally, we ingest all vendor tables/transactions into a Data warehouse or Data lake or any self-service environment, and then let SMEs run meaningful analytics on it.
 instead,
 Lets first define a Vendor DataType and then build ELT or ETL operations on it.
 This simple concept will age your data to fine gold and SME will be able to do self-service analytics with worrying too much learning data structure and entity relationships.
@@ -34,7 +34,7 @@ Instead of loading all your accounting data into RDBMS tables,
 developers take time to pre-define an accounting Data Structure such as JOURNALS, LEDGER, ACCOUNTINGLINES, CHARTFIELDs and HIERARCHY data types, then ELT data into these Data Structures and push it to the reporting database.
 This will lead to a much powerful driverless self-service live reporting/ predictive analytics environment.
 
-In the following sections, we will discuss ELT & ELT strategies.
+In the following sections, we will discuss few ETL & ELT strategies.
 
 ---
 
@@ -63,6 +63,14 @@ on the other hand, reading 5 lines from 5000 pages PDF, doesn't justify the need
 
 Let's look into few example used to extract different type of data.
 
+#### add GeneralLedger.jl package
+
+```@repl
+# first, add GeneralLedger.jl package to your environment
+using Pkg
+Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl")
+```
+
 #### file download
 
 **download a simple file from a website, FTP location**
@@ -70,8 +78,8 @@ Let's look into few example used to extract different type of data.
 # let's download Apple INC Q2 2021 SEC Filing document
 # downloading from website
 # download(url::AbstractString, [path::AbstractString = tempname()]) -> path
-
-fl = download("https://s2.q4cdn.com/470004039/files/doc_financials/2021/q2/FY21-Q2-Consolidated-Financial-Statements.pdf");
+using GeneralLedger
+fl = getFile("https://s2.q4cdn.com/470004039/files/doc_financials/2021/q2/FY21-Q2-Consolidated-Financial-Statements.pdf", "FY21-Q2-Consolidated-Financial-Statements.pdf");
 filesize(fl)
 ```
 
@@ -90,11 +98,10 @@ In this section, we will build a simple script, which reads input (urls) file, a
 
 *to scrap all available links from webpage tinto a local txt file, see [Web crawl & Web Scraping](@ref web_crawl) section below.*
 ```@repl
-# use this code, to read all links from a txt file and download each file one by one
-using Pkg
-Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl")
+# use this code, to read all links from a txt file 
+# and download each file one by one
 using GeneralLedger
-autoPullFiles("c:\\amit.la\\file_name.txt")
+getPullFiles("c:\\amit.la\\file_name.txt")
 ```
 #### scheduling automated data pull
 In this section, we will learn different options to automate data pull scripts to run on recurring schedule.
@@ -121,14 +128,80 @@ while !done
 end
 ```
 
-#### RDBMS
+#### RDBMS, HIVE
 connecting to Oracle, MY SQL or MS SQL Server
 
-#### HIVE
-connecting to Oracle, MY SQL or MS SQL Server
+In this section, below are few examples showing, how to connect to RDBMS SQL databases using ODBC.jl package.
 
-#### JSON, XML
-working with JSON, XML like files and parsing data
+Please see, user can directly use ODBC.jl package instead of GeneralLedger.jl wrapper functions as shown below.
+GeneralLedger.jl created this wrapper functions just to enforce and implement standard community guidelines and best practices.
+
+For example
+    - It's not a good idea to pass Database credentials to functions directly, instead, credentials should be kept in separate environment file.
+    - Similarily, keeping SQLs in xls/txt file is better than using variable to hold SQLs.
+
+First create a txt file to hold database credentials and make sure DSN are already created in computing environment.
+
+`environment.txt`
+
+    user=username
+    pwd=password
+    dsn=userdsnname
+    hive=hdinsightstr
+    port=portnumber
+
+```@repl
+using GeneralLedger
+getDSNs()
+getDrivers()
+```
+
+Next create txt file(s) to hold database SQLs.
+
+`sqls.txt`
+
+    createTable1=INSERT INTO table1 (column1) SELECT table2.column1 FROM table2 WHERE table2.column1 > 100;
+    readTable1=SELECT * FROM table1;
+    updateTable1=UPDATE table SET column1 = value1, column2 = value2, ... WHERE condition;
+    upsertTable1=BEDIN tran IF EXISTS (SELECT * FROM table1 WITH (updlock,serializable) WHERE key = @key) BEGIN UDPATE table1 SET ... WHERE key = @key END ELSE BEGIN INSERT INTO table1 (key, ...) VALUES (@key, ...) END COMMIT TRAN
+    softDeleteTable1=UPDATE table SET deleted=True, ... WHERE condition;
+    hardDeleteTable1=delete * from table1 where table1.column1 > 100
+
+
+```@repl
+using GeneralLedger, DataFrames
+conn = getDBConnection("environment.txt")
+sql = getSQLs("sqls.txt")
+df = runSQL(conn, sql.readTable1) |> DataFrame
+
+```
+when you are done with SQLs, don't forget to close DB connection.
+
+#### close DB Connections
+
+```@repl
+using GeneralLedger
+setCloseConnection()
+```
+
+*using ODBC to insert data into RDBMS may be very slow operation, see below LOAD section for other methods/strategies to load bulk data.*
+
+#### JSON
+```@repl
+# use this code, to download BITCOIN market price into a dataframe
+# and download data in csv format
+using GeneralLedger
+df = getJSONintoDataFrame("https://api.coindesk.com/v1/bpi/currentprice.json", "downloads/web")
+```
+
+#### XML
+
+```@repl
+# use this code, to download XML into a dataframe
+# and download data in csv format
+using GeneralLedger
+df = getXMLintoDataFrame("https://www.clinicaltrials.gov/ct2/results/rss.xml?rcv_d=14&lup_d=&sel_rss=new14&cond=Coronavirus&count=10000", "downloads/web")
+```
 
 ---
 
@@ -144,25 +217,29 @@ We will store these links into csv file and this file can be used in [automating
 # you must have a valid webdriver session running on your machine
 # download a valid chromedriver version on your machine from this link
 # https://chromedriver.chromium.org/downloads (may vary)
-# after you download, open a terminal window & browe to directory where chromedrive.exe is location and run
+# after you download, open a terminal window & browe to directory
+# where chromedrive.exe is location and run
 # chromedriver.exe --url-base=/wd/hub
 # above command will start a chrome webdriver session on port 9515
-# if you see an error below, that's because I didn't provide correct path to find chromedriver.exe file
 
 wdrvCommand = `chromedriver.exe --url-base=/wd/hub`
+# if you see an error below, that's because I didn't provide correct path
+# to find chromedriver.exe file
 run(wdrvCommand)
 ```
 
 **web crawl & web scraping**
 
 ```@repl
-using Pkg
-Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl")
-using GeneralLedger
 # Call this function to crawl through a web page and download all file links
-# first parameter is webpage url, next parameter is list of all file extensions user wish to download followed by output directory path
+# first parameter is webpage url, next parameter is list of all file extensions
+# where user wish to download followed by output directory path
+using GeneralLedger
 getWebLinks("https://investor.apple.com/investor-relations/default.aspx#tabs_content--2021", ["pdf","csv","xlsx","xls"], "downloads/web")
 ```
+
+GeneralLedger `getWebLinks` function fetches and store these links into csv file, which is used in [automating data pull](@ref auto_data_pull), to automatically download all files at once.
+
 ---
 
 ## Load
@@ -176,6 +253,16 @@ Think of these scenarios you will be dealing after data is loaded.
 - you dont want to fetch the same file if it already exists in the local/hadoop directory.
 - in case of RDBMS, you may want to mark each record with CRUD date (when a row was first created, updated and read. You may never want to hard delete a row, and just do a soft delete instead to hide from the user's view).
 
+using ODBC to load BULK data could be very slow operations, instead Cloud data upload strategies are highly recommended to move data.
+
+For Example, using Oracle, Google or Azure cloud storage systems could be easier option to load huge datasets into RDBMs.
+
+[Google Cloud SQL upload strategy](https://cloud.google.com/sql/docs/mysql/import-export/importing)
+
+[Oracle Cloud upload strategy](https://docs.oracle.com/en/database/oracle/machine-learning/oml4py/1/mlpug/push-data-to-database.html#GUID-C50C0D37-C057-43CE-BE4B-750E52865E2C)
+
+`TODO: will update this section to show case how to use Julia to upload Big Data into cloud databases.`
+
 ---
 
 ## Transform
@@ -184,14 +271,30 @@ What seems hardest, is the easiest part to deal with. Once a correct dataset is 
 In ELT like environments, Transformation is mostly done on Analytical tool, like Microsoft Power BI, Tableau, Oracle Analytics are extremely powerful and provide out of the box transformation techniques.
 
 However, here are some useful scripts, which can be run on local environment for data cleansing.
-These scripts are extremely powerful when dealing with extreme large Big data sets.
+These GeneralLedger.jl data cleansing/tranformation funcitons are extremely powerful when dealing with extreme large Big data sets.
 
-- removing unwanted chars in columns headers or rows.
+- read all xls files from a directory                       getXLSinDirectory
+- removing unwanted chars in columns headers or rows        setColNames
+- arrange words (remove unwanted chars, sort and return uppercase)  getArrangedWords
+- FuzzyWuzzy - finds closest match for a given string in data frame column  getFuzzyWuzzy
+- identifying duplicates
+- identifying key columns in dataset
 - removing duplicates
 - removing missing, NA
+- removing words
 - replacing chars/ strings
 - categorizing data
+- show pretty tables with sliders (Pluto only)
 - creating Hierarchy, Tree like dimensional structure
+- creating synthetic reversible data (produces two files, one with masked data and original with masked data)
+
+```@repl
+using GeneralLedger
+# read all xls files from a directory
+getXLSinDirectory(".")
+# Call this function to remove not-compatible SQL columns chars
+setColNames("Amit Sh-ukla # \$")
+```
 
 ---
 

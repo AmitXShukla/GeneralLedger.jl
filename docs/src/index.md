@@ -4,13 +4,30 @@ CurrentModule = GeneralLedger
 
 ### ML for GL - Machine Learning for General Ledger
 
-## Objective
+	current release: v0.18
+    next planned release: v0.20 Aug 27, 2021.
+    Please do NOT download source code until v0.20 release.
+
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    !!! source code will available v0.20 Aug 27, 2021 !!!
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    planned feature requests:
+        v0.20 Bug fixes, enhance ELT, ETL Datawarehouse support
+        v0.30 real time Visualizations
+        v0.30 real time null hypothesis
+        v0.40 Light Graphs/Network science analysis
+        v0.60 Blockchain distributed ledger
+        v0.70 bug fixes
+        v1.00 final stable release
+
+# Objective
 GeneralLedger.jl provide a complete Data Science Framework for Finance Data Analytics.
 
 Scope of this package includes General Ledger, Sub-Ledgers, Accounting Analytics & Data Science operations using [![JuliaLang](images/julia.png)](https://julialang.org) language. GeneralLedger.jl supports analytics using structured data from ERP systems like
 Oracle, PeopleSoft, SAP, Tally, Intuit, QuickBooks etc.
 
-Finance General Ledger sits at core of ERP systems and supporting sub-ledger/accounting entries/details are necessary to accurately predict/analyze complete General Ledger functionalities.
+Finance General Ledger sits at core of ERP systems and supporting sub-ledger/accounting entrijes/details are necessary to accurately predict/analyze complete General Ledger functionalities.
 
 note -> all sub-ledger/domain specific account will be covered in their own domains like [Procure2Pay.jl](https://github.com/AmitXShukla/P2P.jl/), [TaxAnalytics.jl](https://github.com/AmitXShukla/TaxAnalytics.jl/)
 
@@ -34,33 +51,13 @@ note -> all sub-ledger/domain specific account will be covered in their own doma
 [![LinkedIn](images/linkedin.png)](https://www.linkedin.com/in/ashuklax)
 [![Medium](images/medium.png)](https://amit-shukla.medium.com/)
 
-	next planned release: v0.20 Aug 26, 2021.
-    planned feature requests:
-        v0.20 Bug fixes, enhance ELT, ETL Datawarehouse support
-        v0.30 real time Visualizations
-        v0.30 real time null hypothesis
-        v0.40 Light Graphs/Network science analysis
-        v0.60 Blockchain distributed ledger
-        v0.70 bug fixes
-        v1.00 final stable release
-
 ---
 
 ## Table of Contents
 
 ```@contents
-Pages = ["introduction.md"]
-Depth = 2
 ```
-## Tutorials
 
-```@contents
-Pages => [
-    "About GL" => "tutorials/aboutgl.md"
-	"GL Processes" => "tutorials/glprocesses.md"
-	"ERD" => "tutorials/erd.md"
-	"Installing Julia" => "tutorials/installation.md"
-	"ELT vs ETL" => "tutorials/elt.md"
-]
-Depth = 2
+## Index
+```@index
 ```

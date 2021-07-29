@@ -17,7 +17,8 @@ using XLSX
 using TextAnalysis
 using TimeSeries
 using Flux
-using CUDA
+# using CUDA
+using Dates
 
 abstract type Ledger end
 abstract type SubLedger end
@@ -39,7 +40,8 @@ include("ELTs/web.jl")
 include("ELTs/dbstructs.jl")
 
 export getWebLinks, getFile, getPullFiles, getJSONintoDataFrame, getXMLintoDataFrame
-export setColNames, getXLSinDirectory
+export setColNames, getXLSinDirectory, getArrangedWords, getFuzzyWuzzy, getTokens, setRemoveTokens, setRemoveText, setReplaceText
+export getDuplicateRows, getKeyColumns, setRemDuplicateRows, getCategoryData, getTreeData, getMaskedData
 export getDBConnection, getDSNs, getDrivers, getSQLs, setCloseConnection, runSQL
 export account, department, location, costcenter, operunit, ledger
 

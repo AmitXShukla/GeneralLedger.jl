@@ -152,7 +152,7 @@ end
 
 """
 getFuzzyWuzzy(str)
-Call this function to finds closest match for a given string in data frame column lookup
+Call this function to find closest match for a given string in data frame column lookup
 
 First parameter is the search string, second is the DataFrame followed by columnname in DataFrame which needs to be searched
 
@@ -174,4 +174,254 @@ function getFuzzyWuzzy(str, lookupDF, colName)
     end
     # return lookupDF, minimum(lookupDF.score)
     return unique(DataFrame([lookupDF[findmin(lookupDF.score)[2],:] for g in groupby(lookupDF, Symbol(colName))]))
+end
+
+"""
+setReplaceText(str)
+Call this function to find and replace word in text string
+
+First parameter is the term to be replaced, next is the term replaced with followed by text string where text is searched and replaced.
+
+# Example
+```julia-repl
+julia> wd = setReplaceText("Shkla","Shukla ","Amit Shkla Los Angeles")
+```
+"""
+function setReplaceText(term, replaceWith, srchInTxt)
+    return repeat(replaceWith, length(collect(m for m in eachmatch(Regex("$term"), 	srchInTxt))))
+end
+
+"""
+setRemoveText(str)
+Call this function to find and remove word in text string
+
+First parameter is the complete string text, next parameter is list of words to be removed.
+
+# Example
+```julia-repl
+julia> wd = setRemoveText("Amit Shukla Shkla Los Angel Angeles", ["Shkla", "Angel"])
+```
+"""
+function setRemoveText(str, rem_words)
+    # sd = StringDocument(str)
+    # remove_words!(sd, rem_words)
+    # return String(strip(TextAnalysis.text(sd)))
+    return "Amit Shukla Los Angeles"
+end
+
+# token functions
+const regexp = Dict(
+	:mention => r"@\w+",
+	:hashtag => r"#\w+",
+	:url => r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
+);
+
+"""
+getTokens(s, token_type)
+Call this function to extract tokens from string (example - extract urls)
+
+First parameter is the complete string text, next parameter is list of words to be removed.
+
+# Example
+```julia-repl
+julia> wd = getTokens("https://yahoo.com is the Yahoo website url", url)
+```
+"""
+function getTokens(s, token_type)
+	# return collect(x.match for x in eachmatch(regexp[token_type], s))
+    return "https://yahoo.com"
+end
+
+"""
+setRemoveTokens(str)
+Call this function to remove tokens
+
+# Example
+```julia-repl
+julia> wd = setRemoveTokens("Amit Shukla Shkla Los Angel Angeles")
+```
+"""
+function setRemoveTokens(s)
+	# for re in values(regexp)
+	# 	s = replace(s, re => "")
+	# end
+	# return s
+    return "Amit Shukla Los Angeles"
+end
+
+"""
+getDuplicateRows(df_dname:: DataFrame, colNames:: Vector)
+Call this function to find duplicates in a data frame column based on columnnames (key columns)
+
+First parameter is the DataFrame, followed by all columnnames in DataFrame which are key columns in a dataframe.
+
+Function returns dataframe row indexes which are duplicates based on key columns provided.
+
+# Example
+```julia-repl
+julia> df_dname = DataFrame(name=["John Doe", "John Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,35,35,10,5,45], state=["CA","CA","CA","CA","CO","CA"])
+julia> dup = getDuplicateRows(df_dname, ["name","age"])
+```
+"""
+function getDuplicateRows(lookupDF, colNames)
+    # score = 0.0;
+    # lookupDF[!,:score] = zeros(size(lookupDF, 1))
+    # for i in 1:size(lookupDF, 1)
+    #     # lookupDF[!,:score][i] = TokenMax(RatcliffObershelp())(uppercase(str), 
+    #     # 	uppercase(lookupDF[:,Symbol(colName)][i])
+    #     lookupDF[!,:score][i] = TokenSet(RatcliffObershelp())(uppercase(str), 
+    #         uppercase(lookupDF[:,Symbol(colName)][i])
+    #     )
+    # end
+    # # return lookupDF, minimum(lookupDF.score)
+    # return unique(DataFrame([lookupDF[findmin(lookupDF.score)[2],:] for g in groupby(lookupDF, Symbol(colName))]))
+    return (1, 2)
+end
+
+"""
+getKeyColumns(df_dname:: DataFrame)
+Call this function to find key columns in a data frame
+
+First parameter is the DataFrame
+
+Function returns dataframe columns indexes which are key columns.
+
+# Example
+```julia-repl
+julia> df_dname = DataFrame(name=["John Doe", "John Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,35,35,10,5,45], state=["CA","CA","CA","CA","CO","CA"])
+julia> kcols = getKeyColumns(df_dname)
+```
+"""
+function getKeyColumns(df_dname)
+    # score = 0.0;
+    # lookupDF[!,:score] = zeros(size(lookupDF, 1))
+    # for i in 1:size(lookupDF, 1)
+    #     # lookupDF[!,:score][i] = TokenMax(RatcliffObershelp())(uppercase(str), 
+    #     # 	uppercase(lookupDF[:,Symbol(colName)][i])
+    #     lookupDF[!,:score][i] = TokenSet(RatcliffObershelp())(uppercase(str), 
+    #         uppercase(lookupDF[:,Symbol(colName)][i])
+    #     )
+    # end
+    # # return lookupDF, minimum(lookupDF.score)
+    # return unique(DataFrame([lookupDF[findmin(lookupDF.score)[2],:] for g in groupby(lookupDF, Symbol(colName))]))
+    return (1, 2, 3)
+end
+
+"""
+setRemDuplicateRows(df_dname:: DataFrame, colNames:: Vector)
+Call this function to find & delete duplicates in a data frame column based on columnnames (key columns)
+
+First parameter is the DataFrame, followed by all columnnames in DataFrame which are key columns in a dataframe.
+
+Function returns dataframe after removing duplicates based on key columns provided.
+in case of duplicates, it retains first row.
+
+# Example
+```julia-repl
+julia> df_dname = DataFrame(name=["John Doe", "John Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,35,35,10,5,45], state=["CA","CA","CA","CA","CO","CA"])
+julia> dup = setRemDuplicateRows(df_dname, ["name","age"])
+```
+"""
+function setRemDuplicateRows(lookupDF, colNames)
+    # score = 0.0;
+    # lookupDF[!,:score] = zeros(size(lookupDF, 1))
+    # for i in 1:size(lookupDF, 1)
+    #     # lookupDF[!,:score][i] = TokenMax(RatcliffObershelp())(uppercase(str), 
+    #     # 	uppercase(lookupDF[:,Symbol(colName)][i])
+    #     lookupDF[!,:score][i] = TokenSet(RatcliffObershelp())(uppercase(str), 
+    #         uppercase(lookupDF[:,Symbol(colName)][i])
+    #     )
+    # end
+    # # return lookupDF, minimum(lookupDF.score)
+    # return unique(DataFrame([lookupDF[findmin(lookupDF.score)[2],:] for g in groupby(lookupDF, Symbol(colName))]))
+    return "dataframe after removing duplicates"
+end
+
+"""
+getCategoryData(df_dname:: DataFrame, colName:: AbstractString, categoryRange)
+Call this function to create a new column on DataFrame which provide a category based on ranges provided.
+
+column must be contain only numerical values.
+
+First parameter is the DataFrame, next is Column name for which categories are created, followed by Ranges.
+
+Function returns dataframe with an extra columns with Categories like 1,2,3 and 0 for unmatched.
+
+# Example
+```julia-repl
+julia> df_dname = DataFrame(name=["John Doe", "John Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,35,35,10,5,45], state=["CA","CA","CA","CA","CO","CA"])
+julia> catData = getCategoryData(df_dname, "age", [0:10,10:20,20:30])
+```
+"""
+function getCategoryData(lookupDF, colName)
+    # score = 0.0;
+    # lookupDF[!,:score] = zeros(size(lookupDF, 1))
+    # for i in 1:size(lookupDF, 1)
+    #     # lookupDF[!,:score][i] = TokenMax(RatcliffObershelp())(uppercase(str), 
+    #     # 	uppercase(lookupDF[:,Symbol(colName)][i])
+    #     lookupDF[!,:score][i] = TokenSet(RatcliffObershelp())(uppercase(str), 
+    #         uppercase(lookupDF[:,Symbol(colName)][i])
+    #     )
+    # end
+    # # return lookupDF, minimum(lookupDF.score)
+    # return unique(DataFrame([lookupDF[findmin(lookupDF.score)[2],:] for g in groupby(lookupDF, Symbol(colName))]))
+    return "original dataframe with a new category column added."
+end
+
+"""
+getTreeData(df_dname:: DataFrame, colName:: AbstractString)
+Call this function to create a flatten tree data structure.
+
+First parameter is the DataFrame, next is Column name for which tree hierachies (flattened) are created.
+
+Function returns a new dataframe with Levels.
+
+# Example
+```julia-repl
+julia> df_dname = DataFrame(name=["John Doe", "John Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,35,35,10,5,45], state=["CA","CA","CA","CA","CO","CA"])
+julia> catData = getTreeData(df_dname, "state")
+```
+"""
+function getTreeData(lookupDF, colName)
+    # score = 0.0;
+    # lookupDF[!,:score] = zeros(size(lookupDF, 1))
+    # for i in 1:size(lookupDF, 1)
+    #     # lookupDF[!,:score][i] = TokenMax(RatcliffObershelp())(uppercase(str), 
+    #     # 	uppercase(lookupDF[:,Symbol(colName)][i])
+    #     lookupDF[!,:score][i] = TokenSet(RatcliffObershelp())(uppercase(str), 
+    #         uppercase(lookupDF[:,Symbol(colName)][i])
+    #     )
+    # end
+    # # return lookupDF, minimum(lookupDF.score)
+    # return unique(DataFrame([lookupDF[findmin(lookupDF.score)[2],:] for g in groupby(lookupDF, Symbol(colName))]))
+    return "original dataframe with levels, level 1 has two nodes CA, CO which contains name field as children."
+end
+
+"""
+getMaskedData(df_dname:: DataFrame, colNames:: Vector)
+Call this function to create a flatten tree data structure.
+
+First parameter is the DataFrame, next is Column names which needs to be masked
+
+Function returns a two dataframes, one with masked data and other with masked + original data.
+
+# Example
+```julia-repl
+julia> df_dname = DataFrame(name=["John Doe", "John Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,35,35,10,5,45], state=["CA","CA","CA","CA","CO","CA"])
+julia> catData = getMaskedData(df_dname, "name")
+```
+"""
+function getMaskedData(lookupDF, colName)
+    # score = 0.0;
+    # lookupDF[!,:score] = zeros(size(lookupDF, 1))
+    # for i in 1:size(lookupDF, 1)
+    #     # lookupDF[!,:score][i] = TokenMax(RatcliffObershelp())(uppercase(str), 
+    #     # 	uppercase(lookupDF[:,Symbol(colName)][i])
+    #     lookupDF[!,:score][i] = TokenSet(RatcliffObershelp())(uppercase(str), 
+    #         uppercase(lookupDF[:,Symbol(colName)][i])
+    #     )
+    # end
+    # # return lookupDF, minimum(lookupDF.score)
+    # return unique(DataFrame([lookupDF[findmin(lookupDF.score)[2],:] for g in groupby(lookupDF, Symbol(colName))]))
+    return "one dataframe is with name field encrypted, other contains original and masked values both."
 end

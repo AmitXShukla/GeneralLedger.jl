@@ -263,6 +263,62 @@ For Example, using Oracle, Google or Azure cloud storage systems could be easier
 
 `TODO: will update this section to show case how to use Julia to upload Big Data into cloud databases.`
 
+First, we will create few METADAT tables to store LOAD information.
+
+Ideally, These METADATA tables should be stores in Target system database, however, just to showcase, data LOAD Strategy, in this case, We will use `JULIADB` to capture TABLES LOAD METADATA information.
+
+#### [METADATA tables](@id meta_data_table)
+
+`METADATA.LOADTIME`
+This table is used to store information related to each table METADATA.
+Everytime, after Data is Extracted and loaded into Target Database, these METADATA tables must be updated.
+
+    name=tablename
+    sor=source_system_name
+    author=source_system_userid
+    updateAt=lastupddttm
+
+`METADATA.DATE_BASED_CDC` create One METADATA file per table.
+This table is used to store information related to each table read from source through a date based `CDC (Change data capture)` logic.
+and next time, same date is used to pull incremental data from source system.
+
+For example, - 
+`SELECT * FROM sourceDB.table1 WHERE sourceDB.table1.updateDttm > JULIADB.METADATA.DATE_BASED_CDC.table1.incrementDt`
+
+Everytime, after Data is Extracted and loaded into Target Database, these METADATA tables must be updated.
+
+    name=tablename
+    sor=source_system_name
+    author=source_system_userid
+    updateAt=lastupddttm
+    incrementDt=max_updateDt_at_source # Leave blank in case of KEYs based CDC
+    sid=maxDourrogateID # unique numerical identifier per row, used in ETL Datawarehouse.
+                        # Leave blank is case of ELT Data lake
+
+`METADATA.KEYS_BASED_CDC` create One METADATA file per table.
+This table is used to store information related to each table read from source through a date based `CDC (Change data capture)` logic.
+and next time, same date is used to pull incremental data from source system.
+
+For example, - 
+`SELECT [key_columns] FROM sourceDB.table1 <MATCH> JULIADB.METADATA.DATE_BASED_CDC.table1.key1..2..3 => INSERT / UPDATE / UPSERT`
+
+Everytime, after Data is Extracted and loaded into Target Database, these METADATA tables must be updated.
+
+    key1=primarykey
+    key2=primarykey
+    key3=primarykey
+    author=source_system_userid
+    createAt=currentdttm # do not update this, in case of an update
+    updateAt=currentdttm
+    sid=maxDourrogateID # unique numerical identifier per row, used in ETL Datawarehouse.
+                        # Leave blank is case of ELT Data lake
+
+```@repl
+using GeneralLedger
+getDSNs()
+getDrivers()
+```
+
 ---
 
 ## Transform
@@ -273,27 +329,88 @@ In ELT like environments, Transformation is mostly done on Analytical tool, like
 However, here are some useful scripts, which can be run on local environment for data cleansing.
 These GeneralLedger.jl data cleansing/tranformation funcitons are extremely powerful when dealing with extreme large Big data sets.
 
-- read all xls files from a directory                       getXLSinDirectory
-- removing unwanted chars in columns headers or rows        setColNames
-- arrange words (remove unwanted chars, sort and return uppercase)  getArrangedWords
-- FuzzyWuzzy - finds closest match for a given string in data frame column  getFuzzyWuzzy
-- identifying duplicates
-- identifying key columns in dataset
-- removing duplicates
-- removing missing, NA
-- removing words
-- replacing chars/ strings
-- categorizing data
-- show pretty tables with sliders (Pluto only)
-- creating Hierarchy, Tree like dimensional structure
-- creating synthetic reversible data (produces two files, one with masked data and original with masked data)
+- read all xls files from a directory `getXLSinDirectory`
+- removing unwanted chars in columns headers or rows `setColNames`
+- arrange words (remove unwanted chars, sort and return uppercase) `getArrangedWords`
+- FuzzyWuzzy - finds closest match for a given string in data frame column `getFuzzyWuzzy`
+- removing missing, NA, Tokens `getTokens`, `setRemoveTokens`
+- removing words `setRemoveText`
+- replacing text `setReplaceText`
+- identifying duplicates `getDuplicateRows`
+- identifying key columns in dataset `getKeyColumns`
+- removing duplicates `setRemDuplicateRows`
+- categorizing data `getCategoryData`
+- creating Hierarchy, Tree like dimensional structure `getTreeData`
+- creating synthetic/masked reversible data (produces two files, one with masked data and original with masked data) `getMaskedData`
 
 ```@repl
-using GeneralLedger
+using GeneralLedger, DataFrames
+# getXLSinDirectory
 # read all xls files from a directory
 getXLSinDirectory(".")
+
+# setColNames
 # Call this function to remove not-compatible SQL columns chars
 setColNames("Amit Sh-ukla # \$")
+
+# getArrangedWords
+# Call this function to remove duplicates, unwanted symbols and return uppercase unique values
+wd = getArrangedWords("Amit ; Shukla SHUKLA Shukle , . AmIT Amit # Shuklam Amit ,")
+
+# getFuzzyWuzzy
+# Call this function to find closest match for a given string in data frame column lookup
+# First parameter is the search string, second is the DataFrame followed by columnname in DataFrame which needs to be searched
+df_dname = DataFrame(name=["John Doe", "Jen Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,26,35,10,5,45])
+wd = getFuzzyWuzzy("Mike Jackson", df_dname, "name")
+
+# getTokens
+# Call this function to extract tokens from string (example - extract urls)
+# First parameter is the complete string text, next parameter is list of words to be removed.
+wd = getTokens("https://yahoo.com is the Yahoo website url", url)
+
+# setRemoveTokens
+# Call this function to remove tokens
+wd = setRemoveTokens("Amit Shukla Shkla Los Angel Angeles")
+
+# setRemoveText
+# Call this function to find and remove word in text string
+# First parameter is the complete string text, next parameter is list of words to be removed.
+wd = setRemoveText("Amit Shukla Shkla Los Angel Angeles", ["Shkla", "Angel"])
+
+# setReplaceText
+# Call this function to find and replace word in text string
+# First parameter is the term to be replaced, next is the term replaced with followed by text string where text is searched and replaced.
+wd = setReplaceText("Shkla","Shukla ","Amit Shkla Los Angeles")
+
+# getDuplicateRows
+# Call this function to find duplicates in a data frame column based on columnnames (key columns)
+df_dname = DataFrame(name=["John Doe", "John Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,35,35,10,5,45], state=["CA","CA","CA","CA","CO","CA"])
+dup = getDuplicateRows(df_dname, ["name","age"])
+
+# getKeyColumns
+# Call this function to find key columns in a data frame
+df_dname = DataFrame(name=["John Doe", "John Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,35,35,10,5,45], state=["CA","CA","CA","CA","CO","CA"])
+kcols = getKeyColumns(df_dname)
+
+# setRemDuplicateRows
+# Call this function to find & delete duplicates in a data frame column based on columnnames (key columns)
+df_dname = DataFrame(name=["John Doe", "John Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,35,35,10,5,45], state=["CA","CA","CA","CA","CO","CA"])
+dup = setRemDuplicateRows(df_dname, ["name","age"])
+
+# getCategoryData
+# Call this function to create a new column on DataFrame which provide a category based on ranges provided.
+df_dname = DataFrame(name=["John Doe", "John Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,35,35,10,5,45], state=["CA","CA","CA","CA","CO","CA"])
+catData = getCategoryData(df_dname, "age", [0:10,10:20,20:30])
+
+# getTreeData(df_dname:: DataFrame, colName:: AbstractString)
+# Call this function to create a flatten tree data structure.
+df_dname = DataFrame(name=["John Doe", "John Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,35,35,10,5,45], state=["CA","CA","CA","CA","CO","CA"])
+catData = getTreeData(df_dname, "state")
+
+# getMaskedData(df_dname:: DataFrame, colNames:: Vector)
+# Call this function to create a flatten tree data structure.
+df_dname = DataFrame(name=["John Doe", "John Doe","MICHAEL Doe", "Jacob Doe", "Julia Dpe", "Michael Jackson"],age=[35,35,35,10,5,45], state=["CA","CA","CA","CA","CO","CA"])
+catData = getMaskedData(df_dname, "name")
 ```
 
 ---
@@ -302,7 +419,34 @@ setColNames("Amit Sh-ukla # \$")
 
 Lets discuss how to create a Data warehouse like structure while ETL- extracting, loading and transforming data into a Data warehouse structure for faster ad-hoc self service star-schema like reporting.
 
+We discussed several different ways to extract and load data into the system.
+To create an ETL Datawarehouse, 
+
+A Star schema DIMENSION table is created, where each row must include a SID (Surrogate ID), i.e. a unique identifier available for numerical joins and
+
+A Star Schema FACT table is created on primary transaction tables, where, every chartfield/dimention lookup/refernce field, does a look-up on DIMENSION table to get DIMENSION.SID value.
+
+please refer to [LOAD](@ref meta_data_table) section, METADATA tables structure and look for a field SID.
+
+after data is extracted from source system, each row is appended with a unique SID value. 
+
+For example, - 
+`INSERT INTO table1.sid VALUES sid = (SELECT MAX(SID) FROM JULIADB.METADATA.DATE_BASED_CDC.table1.sid + 1)`
+
+Everytime, after Data is Extracted and loaded into Target Database, these METADATA tables must be updated.
+
 ---
 ## ELT Data lake
 
 Lets discuss how to create a Data lake like structure for faster ad-hoc self service star-schema like reporting.
+
+To create an ELT Data Lake kind of structure, SID values are optional. Instead, system prefer to perform BULK INSERT or UPDATE.
+ELT Data Lakes are also easier to create TYPE 2 Dimensions/Facts tables. (Where history is retained).
+
+For example - 
+
+`new rows => INSERT INTO table1 values (SELECT 'active_row=1', table1.* FROM source.table1)`
+
+`update rows => UPDATE table1 SET active_row=0 WHERE rows = <updated rows>`
+
+`update rows => INSERT INTO table1 values (SELECT 'active_row=1', table1.* FROM source.table1)`

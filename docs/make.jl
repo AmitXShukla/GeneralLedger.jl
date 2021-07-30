@@ -16,9 +16,8 @@ makedocs(sitename="GeneralLedger.jl",
 				  "p-value, null hypothesis and real time analytic" => "tutorials/analytic.md"
 				  "Time Series, Impact analysis" => "tutorials/timeseries.md"
 				  "ML for GL" => "tutorials/mlforgl.md"
-				  "DL for GL" => "tutorials/dlforgl.md"
-				  "Graph Theory / Network Science" => "tutorials/graph.md"
 				  "NLP for GL" => "tutorials/nlp.md"
+				  "Graph Theory / Network Science" => "tutorials/graph.md"
 				  ]
 			"API" => "api.md"
 		   ],

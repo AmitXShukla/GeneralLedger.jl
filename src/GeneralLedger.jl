@@ -6,7 +6,7 @@ module GeneralLedger
 #     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #     !!! source code will available v0.20 Aug 27, 2021 !!!
 #     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-using Base:Downloads
+using Base: Downloads
 using Documenter
 using DataFrames
 using HTTP
@@ -38,11 +38,13 @@ abstract type PurchaseOrder end
 include("ELTs/elt.jl")
 include("ELTs/web.jl")
 include("ELTs/dbstructs.jl")
+include("Samples/datasets.jl")
 
 export getWebLinks, getFile, getPullFiles, getJSONintoDataFrame, getXMLintoDataFrame
 export setColNames, getXLSinDirectory, getArrangedWords, getFuzzyWuzzy, getTokens, setRemoveTokens, setRemoveText, setReplaceText
 export getDuplicateRows, getKeyColumns, setRemDuplicateRows, getCategoryData, getTreeData, getMaskedData
 export getDBConnection, getDSNs, getDrivers, getSQLs, setCloseConnection, runSQL
 export account, department, location, costcenter, operunit, ledger
+export getTimeTakenData
 
 end

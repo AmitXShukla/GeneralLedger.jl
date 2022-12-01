@@ -11,14 +11,17 @@ like, Passenger needs to travel to bus, train station or time to get ready, wait
 Let's capture these assumptions as in column "bias" for now.
     
 """
-function getSampleDataTimeTaken(str)
-    return DataFrame(Vehicle=["new car", "old bus", "train", "jetpack"],
-        weather="sunny",
-        season="summer",
-        time="1400",
-        weekday=1,
-        speed=60,
-        distance=400,
-        bias=[0, 0.2, 0.4, -]
-    )
+function getSampleDataTimeTaken(sampleSize=10::Int8)
+    dfVehicle = DataFrame(
+        vehicleID=1:5,
+        vehicle=["new car", "old bus", "train", "jetpack", "UFO"],
+        speed=[75, 58, 95, 999, 1999],
+        bias=[0, 0.2, 0.4, 99, 199])
+    dfTimeTaken = innerjoin(DataFrame(
+            vehicleID=rand(dfVehicle.vehicleID, sampleSize),
+            season=rand(["summer", "winter", "fall", "rain"], sampleSize),
+            departureTime=rand(0600:100:2200, sampleSize),
+            distance=fill(400, sampleSize)
+        ), dfVehicle, on=:vehicleID)
+    transform!(dfTimeTaken, [:distance, :speed] => ByRow((x1, x2) -> x1 / x2) => "timeTaken")
 end

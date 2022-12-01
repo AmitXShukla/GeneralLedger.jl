@@ -1,5 +1,5 @@
 """
-    getTimeTakenData(str)
+    getSampleDataTimeTaken(str)
 Call this function to produce sample datasets
 
 Time taken to travel between two cities via Air, Bus, Train or personal vehicle depends mostly depends on speed and distance. 
@@ -11,7 +11,7 @@ like, Passenger needs to travel to bus, train station or time to get ready, wait
 Let's capture these assumptions as in column "bias" for now.
     
 """
-function getTimeTakenData(str)
+function getSampleDataTimeTaken(str)
     return DataFrame(Vehicle=["new car", "old bus", "train", "jetpack"],
         weather="sunny",
         season="summer",

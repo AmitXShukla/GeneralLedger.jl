@@ -169,6 +169,10 @@ The total amount accrued, principal plus interest, with compound interest on a p
     Formula = GOK (God only knows)
 ```
 
+### Sample Deposit data
+
+Let's look at few sample results produced by different deposit types.
+
 ```@repl
 using Pkg;
 Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
@@ -176,7 +180,6 @@ using GeneralLedger;
 GeneralLedger.getSampleDataDeposits(sampleSize=10, P=10000, r=3.875, n=1, t=90)
 ```
 
-Let's use Julia language to create some data and plot this for visual analysis.
 
 ### UAT Universal Approximation theorem
 As per Wikipedia -

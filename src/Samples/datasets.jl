@@ -47,7 +47,7 @@ end
 
     P=10000::Int64 # Principal amount
     r=3.875::Float64 # Rate of Interest
-    n=1::Int8, # compound frequency - Daily=365, Monthly=12, Quarterly=4, Annually=1
+    n=1::Int8, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
     t=60::Int8 # number of deposit months
 
     function getSampleBD(P, r, n, t) # buddy deposit
@@ -61,7 +61,7 @@ function getSampleBD(P, r, n, t) # buddy deposit
     n = 1 # simple interest calculated per year
     r = r / 100
     t = t / 12
-    return P, P * (1 + (r * t) / n)
+    return P * (1 + (r * t) / n) - P, P * (1 + (r * t) / n) # interest, total
 end
 
 """
@@ -70,7 +70,7 @@ end
 
     P=10000::Int64 # Principal amount
     r=3.875::Float64 # Rate of Interest
-    n=1::Int8, # compound frequency - Daily=365, Monthly=12, Quarterly=4, Annually=1
+    n=1::Int8, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
     t=60::Int8 # number of deposit months
 
     function getSampleCD(P, r, n, t) # certificate deposit
@@ -82,7 +82,7 @@ end
 function getSampleCD(P, r, n, t) # certificate deposit
     r = r / 100
     t = t / 12
-    return P, P * (1 + r / n)^(n * t)
+    return P * (1 + r / n)^(n * t) - P, P * (1 + r / n)^(n * t)# interest, total
 end
 
 """
@@ -91,7 +91,7 @@ end
 
     P=10000::Int64 # Principal amount
     r=3.875::Float64 # Rate of Interest
-    n=1::Int8, # compound frequency - Daily=365, Monthly=12, Quarterly=4, Annually=1
+    n=1::Int8, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
     t=60::Int8 # number of deposit months
 
     function getSampleRD(P, r, n, t) # random deposit
@@ -99,7 +99,8 @@ end
     end
 """
 function getSampleRD(P, r, n, t) # random deposit
-    return P, P * (1 + randn())
+    x = randn()
+    return P * (1 + x) - P, P * (1 + x) # interest, total
 end
 
 """
@@ -112,25 +113,25 @@ and must not be used for any real calculations.
 sampleSize=10:Int8 # number of rows generated
 P=10000::Int64 # Principal amount
 r=3.875::Float64 # Rate of Interest
-n=1::Int8, # compound frequency - Daily=365, Monthly=12, Quarterly=4, Annually=1
+n=1::Int8, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
 t=60::Int8 # number of deposit months
     
 """
 function getSampleDataDeposits(; sampleSize=10::Int8, P=10000::Int64, r=3.875::Float64, n=1::Int8, t=60::Int8)
     dfDP = DataFrame(deposit=["buddy"], principal=P, ROI=r, time=t, intType=["Simple"], compound=[1])
-    push!(dfDP, ["certificate", P, r, t, "daily", 365])
-    push!(dfDP, ["certificate", P, r, t, "monthly", 12])
-    push!(dfDP, ["certificate", P, r, t, "quarterly", 4])
-    push!(dfDP, ["certificate", P, r, t, "annual", 1])
+    push!(dfDP, ["CD", P, r, t, "daily", 365])
+    push!(dfDP, ["CD", P, r, t, "monthly", 12])
+    push!(dfDP, ["CD", P, r, t, "Qtr", 4])
+    push!(dfDP, ["CD", P, r, t, "annual", 1])
     for i in 1:sampleSize-5
-        push!(dfDP, [string("MutualFund-", i), P, 0.99, t, "-", 1])
+        push!(dfDP, [string("MF-", i), P, 0.99, t, "-", 1])
     end
 
     dfDeposit = select!(dfDP, :,
         [:deposit, :compound] => ByRow((x1, x2)
         ->
             x1 == "buddy" ? getSampleBD(P, r, x2, t) :
-            x1 == "certificate" ? getSampleCD(P, r, x2, t) : getSampleRD(P, r, x2, t)
+            x1 == "CD" ? getSampleCD(P, r, x2, t) : getSampleRD(P, r, x2, t)
         ) => ["Interest", "Total"]
     )
     return dfDeposit

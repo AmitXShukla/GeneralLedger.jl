@@ -19,6 +19,7 @@ using TimeSeries
 using Flux
 # using CUDA
 using Dates
+using CairoMakie
 
 abstract type Ledger end
 abstract type SubLedger end

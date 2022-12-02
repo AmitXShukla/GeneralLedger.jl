@@ -79,9 +79,17 @@ lines!(ax2,x,sin.(x));
 
 save("functions.png", f)
 ```
+```@repl
+using Pkg;
+Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
+using GeneralLedger;
+GeneralLedger.getSampleFigFunctions("functions.png")
+```
+
 ![](functions.png)
 
 ```@repl
+
 GeneralLedger.getSampleDataTimeTaken(5)
 ```
 ## Use Cases

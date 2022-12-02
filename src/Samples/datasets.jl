@@ -30,7 +30,7 @@ end
     getSampleFigFunctions()
 Call this function to produce sample graph showing Discrete and Continuous function examples.
 """
-function getSampleFigFunctions()
+function getSampleFigFunctions(fileName::string="functions.png")
     x = 0:5:100
     f = Figure(backgroundcolor=:orange, resolution=(600, 400))
     ax1 = Axis(f[1, 1], title="Discrete Function", xlabel="x", ylabel="y")
@@ -38,5 +38,5 @@ function getSampleFigFunctions()
     scatter!(ax1, x, x .+ 12)
     lines!(ax2, x, sin.(x))
     # f # uncomment this to see when figure when running online
-    save("functions.png", f)
+    save(fileName, f)
 end

@@ -60,26 +60,6 @@ for example: height of one person in a concert may be anywhere within possible h
 ```
 
 ```@repl
-# let's open a Julia REPL and import packages
-# if you are new to Julia REPL environment and installation
-# please visit this blog https://amit-shukla.medium.com/setup-local-machine-ipad-android-tablets-for-julia-lang-data-science-computing-823d84f2cb28
-
-using Pkg
-Pkg.add(["DataFrames","CSV","CairoMakie"]);
-Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
-using DataFrames, CSV, CairoMakie, GeneralLedger;
-
-x = 0:5:100;
-f = Figure(backgroundcolor = :orange, resolution = (600, 400));
-ax1 = Axis(f[1,1], title = "Discrete Function", xlabel = "x", ylabel = "y");
-ax2 = Axis(f[1,2], title = "Continuous Function", xlabel = "x", ylabel = "y");
-scatter!(ax1,x,x .+ 12);
-lines!(ax2,x,sin.(x));
-# f # uncomment this to see when figure when running online
-
-save("functions.png", f)
-```
-```@repl
 using Pkg;
 Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
 using GeneralLedger;
@@ -89,7 +69,9 @@ GeneralLedger.getSampleFigFunctions("functions.png")
 ![](functions.png)
 
 ```@repl
-
+using Pkg;
+Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
+using GeneralLedger;
 GeneralLedger.getSampleDataTimeTaken(5)
 ```
 ## Use Cases

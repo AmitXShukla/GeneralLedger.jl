@@ -1,6 +1,6 @@
 """
     getSampleDataTimeTaken(str)
-Call this function to produce sample datasets
+Call this function to produce sample datasets showing Timetaken by vehicles.
 
 Time taken to travel between two cities via Air, Bus, Train or personal vehicle depends mostly depends on speed and distance. 
 However, there are other factors like weather, season, population or faults, which may occasionally impact travel time.
@@ -23,5 +23,20 @@ function getSampleDataTimeTaken(sampleSize=10::Int8)
             departureTime=rand(0600:100:2200, sampleSize),
             distance=fill(400, sampleSize)
         ), dfVehicle, on=:vehicleID)
-    transform!(dfTimeTaken, [:distance, :speed] => ByRow((x1, x2) -> x1 / x2) => "timeTaken")
+    select!(dfTimeTaken, [:1, :5, :2, :3, :6, :4, :7], [:distance, :speed, :bias] => ByRow((x1, x2, x3) -> (x1 / x2) + (x3 / 60)) => "timeTaken")
+end
+
+"""
+    getSampleFigFunctions()
+Call this function to produce sample graph showing Discrete and Continuous function examples.
+"""
+function getSampleFigFunctions()
+    x = 0:5:100
+    f = Figure(backgroundcolor=:orange, resolution=(600, 400))
+    ax1 = Axis(f[1, 1], title="Discrete Function", xlabel="x", ylabel="y")
+    ax2 = Axis(f[1, 2], title="Continuous Function", xlabel="x", ylabel="y")
+    scatter!(ax1, x, x .+ 12)
+    lines!(ax2, x, sin.(x))
+    # f # uncomment this to see when figure when running online
+    save("functions.png", f)
 end

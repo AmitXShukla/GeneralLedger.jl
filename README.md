@@ -9,7 +9,7 @@ Scope of this package includes Finance General Ledger, sub-ledgers, accounting e
 
 ```
 In future, This package will support all data science computations for a complete Procure2Pay, Order2Cash, including Procurement life cycle business operations.
-i.e. Orders -> Requestions -> Procurement -> Inventory cycle counting -> Match Exceptions -> Receivables -> Accounts Payables/Billing -> GL Accounting -> General Ledger book keeping.
+i.e. Orders -> Requisitions -> Procurement -> Inventory cycle counting -> Match Exceptions -> Receivables -> Accounts Payable/Billing -> GL Accounting -> General Ledger book keeping.
 
 ```
 
@@ -46,18 +46,18 @@ email: amit@elishconsulting.com
 
 
 ## Development plan:
-- Introduction
-- About General Ledger
-- GL Processes
-- ERD
-- ETL vs ELT, Data warehouse vs Data Lake
-- Self service data analytics
-- Visualizations, Buttons, sliders, filters, n-D plots, plots vs graphs
-- p-value, null hypothesis and real time analytics (onlinestat)
-- Time Series, Impact analysis
-- Machine learning for General Ledger
-- Deep learning
-- Graph theory, network science
+- Introduction | Complete
+- About General Ledger | Complete
+- GL Processes | WIP ETA 01/22/23
+- ERD | Complete
+- ETL vs ELT, Data warehouse vs Data Lake | WIP ETA 02/28/23
+- Self service data analytics | WIP ETA 03/31/23 - Fix Plots, images, Graphs
+- Visualizations, Buttons, sliders, filters, n-D plots, plots vs graphs  | WIP ETA 03/31/23 - Fix Plots, images, Graphs
+- p-value, null hypothesis and real time analytics (onlinestats) | WIP ETA 07/31/23
+- Time Series, Impact analysis | WIP ETA 07/31/23
+- Machine learning for General Ledger | WIP ETA 07/31/23
+- NLP for GL | WIP ETA 07/31/23
+- Graph theory, network science | WIP ETA 07/31/23
 
 ![ERP Modules](https://github.com/AmitXShukla/AmitXShukla.github.io/raw/master/blogs/PlutoCon/ERP_modules.png)
 

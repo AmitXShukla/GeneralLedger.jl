@@ -77,7 +77,7 @@ Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl")
 ```@repl
 # let's download Apple INC Q2 2021 SEC Filing document
 # downloading from website
-# download(url::AbstractString, [path::AbstractString = tempname()]) -> path
+# download(url::AbstractString, [path::AbstractString = tempName()]) -> path
 using GeneralLedger
 fl = getFile("https://s2.q4cdn.com/470004039/files/doc_financials/2021/q2/FY21-Q2-Consolidated-Financial-Statements.pdf", "FY21-Q2-Consolidated-Financial-Statements.pdf");
 filesize(fl)

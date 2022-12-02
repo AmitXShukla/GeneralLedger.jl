@@ -5,11 +5,11 @@ CurrentModule = GeneralLedger
 ### ML for GL - Machine Learning for General Ledger
 
 	current release: v0.18
-    next planned release: v0.20 Aug 27, 2021.
+    next planned release: v0.20 Aug 27, 2023.
     Please do NOT download source code until v0.20 release.
 
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    !!! source code will available v0.20 Aug 27, 2021 !!!
+    !!! source code will available v0.20 Aug 27, 2023 !!!
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     planned feature requests:
@@ -27,7 +27,7 @@ GeneralLedger.jl provide a complete Data Science Framework for Finance Data Anal
 Scope of this package includes General Ledger, Sub-Ledgers, Accounting Analytics & Data Science operations using [![JuliaLang](images/julia.png)](https://julialang.org) language. GeneralLedger.jl supports analytics using structured data from ERP systems like
 Oracle, PeopleSoft, SAP, Tally, Intuit, QuickBooks etc.
 
-Finance General Ledger sits at core of ERP systems and supporting sub-ledger/accounting entrijes/details are necessary to accurately predict/analyze complete General Ledger functionalities.
+Finance General Ledger sits at core of ERP systems and supporting sub-ledger/accounting entries/details are necessary to accurately predict/analyze complete General Ledger functionalities.
 
 note -> all sub-ledger/domain specific account will be covered in their own domains like [Procure2Pay.jl](https://github.com/AmitXShukla/P2P.jl/), [TaxAnalytics.jl](https://github.com/AmitXShukla/TaxAnalytics.jl/)
 
@@ -38,7 +38,7 @@ note -> all sub-ledger/domain specific account will be covered in their own doma
 
     I will cover examples from ERP Domains like GL (General Ledger), AP (Accounts Payable), AR (Account Receivables), B2P (Buy to Pay), Expense, Travel & Time, HCM Human Capital Management, CRM etc.
 
-    Requestions -> Orders -> Procurement -> Inventory cycle counting -> Match Exceptions -> Receivables -> Accounts Payables/Billing/Liability -> GL Accounting -> General Ledger book keeping.
+    Requisitions -> Orders -> Procurement -> Inventory cycle counting -> Match Exceptions -> Receivables -> Accounts Payable/Billing/Liability -> GL Accounting -> General Ledger book keeping.
 
     Future work : - All sub-ledger/domain specific account will be covered in their own domains like AccountsPayables.jl, AccountsReceivables.jl, Procurement.jl etc.
 

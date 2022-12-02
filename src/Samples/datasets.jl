@@ -99,7 +99,7 @@ end
     end
 """
 function getSampleRD(P, r, n, t) # random deposit
-    x = randn()
+    x = rand(-0.51:0.02:0.99)
     return P * (1 + x) - P, P * (1 + x) # interest, total
 end
 
@@ -121,7 +121,7 @@ function getSampleDataDeposits(; sampleSize=10::Int8, P=10000::Int64, r=3.875::F
     dfDP = DataFrame(deposit=["buddy"], principal=P, ROI=r, time=t, intType=["Simple"], compound=[1])
     push!(dfDP, ["CD", P, r, t, "daily", 365])
     push!(dfDP, ["CD", P, r, t, "monthly", 12])
-    push!(dfDP, ["CD", P, r, t, "Qtr", 4])
+    push!(dfDP, ["CD", P, r, t, "qtr", 4])
     push!(dfDP, ["CD", P, r, t, "annual", 1])
     for i in 1:sampleSize-5
         push!(dfDP, [string("MF-", i), P, 0.99, t, "-", 1])

@@ -169,15 +169,12 @@ The total amount accrued, principal plus interest, with compound interest on a p
     Formula = GOK (God only knows)
 ```
 
-WIPhhhhhhhhhhhhhhh
-CD type	Principal (USD)	Rate of Interest (%)	Time (in months)	Compound	Interest	Total
-				
-B Deposit	100,000	3.875	90	-	29,062.50	129,062.50
-C Deposit	100,000	3.875	90	Daily (365)	33,724.24	133,724.24
-C Deposit	100,000	3.875	90	Monthly (12)	33,663.70	133,663.70
-C Deposit	100,000	3.875	90	Quarterly (4)	33,539.39	133,539.39
-C Deposit	100,000	3.875	90	Annually (1)	32,994.22	132,994.22
-M Deposit	100,000	- 	90	- 	5,888.56	105,888.56
+```@repl
+using Pkg;
+Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
+using GeneralLedger;
+GeneralLedger.getSampleDataDeposits(sampleSize=10, P=10000, r=3.875, n=1, t=90)
+```
 
 Let's use Julia language to create some data and plot this for visual analysis.
 

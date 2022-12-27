@@ -3,12 +3,12 @@
 This tutorial is gentle introduction to understand deep learning concepts with help of real life examples.
 This chapter demonstrates, how to train Finance data on given dataset and predict values.
 
-*This chapter is very detailed, beginner friendly tutorial and assume no prior ML experience.*
+_This chapter is very detailed, beginner friendly tutorial and assume no prior ML experience._
 
 For experienced programmers, please skip to [Use Cases](@ref) section below.
 
-
 ## What is AI, ML and Deep Learning
+
 as per Wikipedia
 The term "artificial intelligence" is intelligence demonstrated by machines, as opposed to natural intelligence displayed by humans and animals. Major AI researchers, now define AI in terms of rationality and acting rationally, which does not limit how intelligence can be articulated.
 
@@ -17,44 +17,56 @@ When Machines are trained to learn problem solving skills by use of information,
 Now, introduction is out of the way, let’s learn meaning of these big words by actually doing it.
 
 here are new AI, ML & DL definitions.
+
 - If you see a Power Point, it's an AI.
 - If you see code with calculus you understand, it's ML.
 - If you see code with calculus you don't understand, it's DL.
-- If you see calculus wrapped in layers, is NN, 
-- if calculus after calculus, is C/RNN, 
+- If you see calculus wrapped in layers, is NN,
+- if calculus after calculus, is C/RNN,
 - If calculus remembering calculus is LSTM,
 - If calculus with physics is PINN
 - And so on…so forth…
 
 ![AI ML DL](../images/aimldl.png)
 
+---
+
 ## Data
+
 Data is useful information described in terms of numbers, text, audio, video, images or any other format which can be read, write and understood in computers.
 
+---
+
 ## Functions
+
 ```math
     y = f(x)
 ```
+
 In functional programming languages, Function is defined as an object, which take input values and maps to output values based on some logic.
 
-### Discrete Functions
+#### Discrete Functions
+
 Give a set or range of input values, if a function produces discrete and separate output (unconnected values), is a discrete function.
 for example: number of people in a concert
 
 ```math
     y = f(x) = x + 12
 ```
+
 ```math
     y = f(300) = 312
 ```
 
-### Continuous Functions
+#### Continuous Functions
+
 Give a set or range of input values, if a function produces output which can take any value with in a finite or infinite interval (connected values), is a continuous function.
 for example: height of one person in a concert may be anywhere within possible heights from 4ft to 7.2ft.
 
 ```math
     y = f(m, f) = (mother's height + father's height)/2
 ```
+
 ```math
     y = f(5, 6) = 5.5
 ```
@@ -68,7 +80,10 @@ GeneralLedger.getSampleFigFunctions("functions.png")
 
 ![](functions.png)
 
+---
+
 ## Using Functions in Machine learning
+
 Functions are smart, given an input value, it can always provide an output value.
 
 We just learned essence of machine learning, if we know function logic, we can always predict output for a given input.
@@ -84,6 +99,8 @@ Let's pretend, if we have a magical function which given an input produces a rat
 
 Machine learning, is data science of finding this missing magical function, which given an input produces a rationally acceptable output.
 
+---
+
 ## Machine learning without any library
 
 Let's take an example,
@@ -97,38 +114,45 @@ Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
 using GeneralLedger;
 GeneralLedger.getSampleDataTimeTaken(5)
 ```
-*There are many assumptions when calculating Time taken,
-like, Passenger time taken for preparation or time to travel to bus, train station is not reflected in calculations.
-Let's capture these assumptions as bias for now.*
 
-### Finding magical function
+_There are many assumptions when calculating Time taken,
+like, Passenger time taken for preparation or time to travel to bus, train station is not reflected in calculations.
+Let's capture these assumptions as bias for now._
+
+#### Finding magical function
+
 Let's assume that we don't know "time taken" formula or some reason like we don't exactly know speed of UFO or Jet Pack, how else we would know how much time it’s going to take to reach to destination when facts are unknown.
 
 Answer may surprise you,
 
 Ask a daily/weekly train or bus commuter, a person who has traveled long enough between two places, often knows and can rationally predict time taken in journey using different vehicles.
 
-Of course, `Time Taken = d/s + b` may give same or better results, 
+Of course, `Time Taken = d/s + b` may give same or better results,
 but it's been observed, if a person's mind is trained (traveled in this case) enough (aka is experienced), can predict and often beat pre-defined formulas and even apply learnings on unknown/unseen circumstances.
 
 In a nutshell, human mind has magical functions stored in brain cells, let's call them neurons, which is trained on data rather than formulas. Using Trained functions, one can apply learning rationally and predict outcome.
 
 Neural network deep learning is nothing but an art of finding this magical function which can be used to rationally predict outcomes based on some input data.
 
+---
+
+## Machine Learning for Finance
+
 Let's take another example, which is more familiar and relevant to Finance community.
 
 ```html
     BD = Buddy Deposit
-    CD = Certificate of Deposit
-    P = Principal amount
-    r = R/100
-    R = Rate of Interest
-    T = Time in years
+    CD = Certificate of Deposit 
+    P = Principal amount 
+    r = R/100 
+    R = Rate of Interest 
+    T = Time in years 
     n = compound (365 = daily, 12=monthly, 1=yearly)
 ```
 
-### Buddy Deposit system
-let’s say, one borrows money from buddy and return it on a simple yearly calculated interest condition
+#### Buddy Deposit system
+
+let’s say, one borrows money from buddy and return it on a simple yearly calculated interest condition (n=1).
 
 ```math
     BD = P (1 + r*t/n)
@@ -137,81 +161,112 @@ let’s say, one borrows money from buddy and return it on a simple yearly calcu
 Using above formula, one can safely predict,
 The total amount accrued, principal plus interest, with simple interest on a principal of `$100,000.00` at a rate of `3.875%` per year over `7.5` years is `$129,062.50`.
 
-### Certificate Deposit, with complex compound interest
+#### Certificate Deposit, with complex compound interest
+
 ```math
     CD = P (1 + r/n)^n*T
 ```
 
 Using above formula, one can safely predict,
-The total amount accrued, principal plus interest, with compound interest on a principal of `$100,000.00` at a rate of `3.875%` per year compounded `365` times per year over `7.5` years is `$133,724.24`.
+The total amount accrued, principal plus interest, with compound interest on a principal of `$100,000.00` at a rate of `3.875%` per year compounded `n=365` times per year over `7.5` years is `$133,724.24`.
 
 ```html
-    A = P + I where
-    P (principal) = $100,000.00
-    I (interest) = $33,724.24
+A = P + I 
+where P (principal) = $100,000.00 I (interest) = $33,724.24
 
-    Calculation Steps:
-
-    First, convert R as a percent to r as a decimal
-    r = R/100
-    r = 3.875/100
-    r = 0.03875 rate per year,
-
-    Then solve the equation for A
-    A = P(1 + r/n)^nt
+Calculation Steps: 
+    First, convert R as a percent to r as a decimal 
+    r = R/100 r = 3.875/100
+    r = 0.03875 rate per year
+    
+    Then solve the equation for A 
+    A = P(1 + r/n)^nt 
     A = 100,000.00*(1 + 0.03875/365)^(365)(7.5) 
     A = 100,000.00*(1 + 0.00010616438356164)^(2737.5) 
-    A = $133,724.24 
+    A = $133,724.24
 ```
 
-### Mutual Fund Deposit
-```html
-    Formula = GOK (God only knows)
+#### Mutual Fund Deposit
+
+```math
+    MFDeposit = GOK^God*Only*knows
 ```
 
-### Sample Deposit data
+#### Sample Deposit data
 
 Let's look at few sample results produced by different deposit types.
 
 ```@repl
 using Pkg;
 Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
-using GeneralLedger;
-GeneralLedger.getSampleDataDeposits(sampleSize=10, P=10000, r=3.875, n=1, t=90)
+using GeneralLedger, UnicodePlots, DataFrames;
+
+sampleSize = 100000
+df = GeneralLedger.getSampleDataDeposits(sampleSize, 100000, 3.875, 1, 90);
+show(df)
+select!(df, :,
+    [:deposit, :rate] => ByRow((x1, x2) 
+        -> contains(x1, "MF") ? x2 :
+        string(x1,"-",x2)) => :depositType)
+dfG = groupby(df, :depositType)
+dfT = sort(combine(dfG, :Total => mean),[:depositType])
+show(dfT)
+UnicodePlots.barplot(dfT.depositType, dfT.Total_mean, title="Return by deposit", name="", xlabel="amount", ylabel="Deposit Type")
 ```
+---
 
+## Learning Finance Mathematics
+There is no such thing as Finance Math. Math is Math, the mother of all languages.
+However, since our topic of interest is Finance, we will learn Mathematics from Finance perspective, which again is no different, other than more focused on Financial calculations.
 
-### UAT Universal Approximation theorem
+#### Univariate and Multivariate
+
+**Univariate**, statistical analysis
+
+#### what is optimization
+
+#### what is a gradient
+
+#### Taking Derivatives
+
+#### ForwardDiff, ReverseDiff
+
+#### ChainRules, AutoGrad | AutoDiff (automatic differentiation)
+
+#### Optimization using gradient
+
+#### what is gradient descent
+
+#### UAT Universal Approximation theorem
+
 As per Wikipedia -
 
-In the mathematical theory of artificial neural networks, universal approximation theorems are results, that establish the density of an algorithmically generated class of functions within a given function space of interest. 
+In the mathematical theory of artificial neural networks, universal approximation theorems are results, that establish the density of an algorithmically generated class of functions within a given function space of interest.
 
 In simple English..
 
 if you set knobs, levers (aka parameters..) of a given UAT function in such a way, this UAT function starts working as the magical function described above (i.e. universal approximation).
 
-Linear regression
-Taylor Series
-Fourier Transformation
+#### Linear regression
+#### Taylor Series
+#### Fourier Transformation
 
-Loss function
+#### Loss function
 
 Gradient
 Gradient Descent
 
-Curse of Dimensionality
+#### Curse of Dimensionality
 
-Neural network
+#### Neural network
 
-Neurons
+#### Neurons
 
-Why we need layers
+#### Why we need layers
 
-What are activation functions
+#### What are activation functions
 
 Training neural networks
-
-
 
 What is a neural network
 A neural network is the magical function:
@@ -227,7 +282,6 @@ How computer works and what is GPU
 Stack vs HEAP
 
 Programming Languages and ML Frameworks
-
 
 UAT
 This means that NN(x) is now a very good function approximator to f(x) = ones(5)!
@@ -246,12 +300,9 @@ curse of dimensionality. It is particularly obvious in the case when one wants t
 distribution between many discrete random variables (such as words in a sentence, or discrete at-
 tributes in a data-mining task). For example, if one wants to model the joint distribution of 10
 consecutive words in a natural language with a vocabulary V of size 100,000, there are potentially
-100 00010 − 1 = 1050 − 1 free parameters. 
+100 00010 − 1 = 1050 − 1 free parameters.
 
-From <https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf> 
-
-
-
+From <https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf>
 
 NN Function
 Background

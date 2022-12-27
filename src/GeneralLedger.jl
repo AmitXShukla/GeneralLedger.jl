@@ -1,10 +1,10 @@
 module GeneralLedger
 # current release: v0.18
-#     next planned release: v0.20 Aug 27, 2021.
+#     next planned release: v0.20 Aug 27, 2023.
 #     Please do NOT download source code until v0.20 release.
 
 #     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#     !!! source code will available v0.20 Aug 27, 2021 !!!
+#     !!! source code will available v0.20 Aug 27, 2023 !!!
 #     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 using Base: Downloads
 using Documenter
@@ -20,6 +20,7 @@ using Flux
 # using CUDA
 using Dates
 using CairoMakie
+using Distributions
 
 abstract type Ledger end
 abstract type SubLedger end
@@ -47,5 +48,4 @@ export getDuplicateRows, getKeyColumns, setRemDuplicateRows, getCategoryData, ge
 export getDBConnection, getDSNs, getDrivers, getSQLs, setCloseConnection, runSQL
 export account, department, location, costcenter, operunit, ledger
 export getSampleDataTimeTaken, getSampleFigFunctions, getSampleDataDeposits
-
 end

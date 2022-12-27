@@ -1,5 +1,5 @@
 """
-    getSampleDataTimeTaken(str)
+    getSampleDataTimeTaken(sampleSize::Int64=10)
 Call this function to produce sample datasets showing Timetaken by vehicles.
 
 Time taken to travel between two cities via Air, Bus, Train or personal vehicle depends mostly depends on speed and distance. 
@@ -11,7 +11,8 @@ like, Passenger needs to travel to bus, train station or time to get ready, wait
 Let's capture these assumptions as in column "bias" for now.
     
 """
-function getSampleDataTimeTaken(sampleSize=10::Int8)
+function getSampleDataTimeTaken(sampleSize::Int64=10)
+    sampleSize = sampleSize < 5 ? 5 : sampleSize
     dfVehicle = DataFrame(
         vehicleID=1:5,
         vehicle=["new car", "old bus", "train", "jetpack", "UFO"],
@@ -27,10 +28,10 @@ function getSampleDataTimeTaken(sampleSize=10::Int8)
 end
 
 """
-    getSampleFigFunctions()
+    getSampleFigFunctions(fileName::String="functions.png")
 Call this function to produce sample graph showing Discrete and Continuous function examples.
 """
-function getSampleFigFunctions(fileName="functions.png"::string)
+function getSampleFigFunctions(fileName::String="functions.png")
     x = 0:5:100
     f = Figure(backgroundcolor=:orange, resolution=(600, 400))
     ax1 = Axis(f[1, 1], title="Discrete Function", xlabel="x", ylabel="y")
@@ -45,10 +46,10 @@ end
     getSampleBD(P, r, n, t)
     Call this function to calculate simple yearly interest.
 
-    P=10000::Int64 # Principal amount
-    r=3.875::Float64 # Rate of Interest
-    n=1::Int8, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
-    t=60::Int8 # number of deposit months
+    P::Int64=10000 # Principal amount
+    r::Float64=3.875 # Rate of Interest
+    n::Int64=1, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
+    t::Int64=60 # number of deposit months
 
     function getSampleBD(P, r, n, t) # buddy deposit
         n =1 # simple interest calculated per year
@@ -68,10 +69,10 @@ end
     getSampleCD(P, r, n, t)
     Call this function to calculate accumulated compound interest.
 
-    P=10000::Int64 # Principal amount
-    r=3.875::Float64 # Rate of Interest
-    n=1::Int8, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
-    t=60::Int8 # number of deposit months
+    P::Int64=10000 # Principal amount
+    r::Float64=3.875 # Rate of Interest
+    n::Int64=1, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
+    t::Int64=60 # number of deposit months
 
     function getSampleCD(P, r, n, t) # certificate deposit
         r = r/100;
@@ -89,10 +90,10 @@ end
     getSampleRD(P, r, n, t)
     Call this function to calculate Random Interest return.
 
-    P=10000::Int64 # Principal amount
-    r=3.875::Float64 # Rate of Interest
-    n=1::Int8, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
-    t=60::Int8 # number of deposit months
+    P::Int=10000 # Principal amount
+    r::Float64=3.875 # Rate of Interest
+    n::Int=1, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
+    t::Int=60 # number of deposit months
 
     function getSampleRD(P, r, n, t) # random deposit
         return P, P * (1+randn())
@@ -104,27 +105,28 @@ function getSampleRD(P, r, n, t) # random deposit
 end
 
 """
-getSampleDataDeposits(;sampleSize=10::Int8, P=10000::Int64, r=3.875::Float64, n=1::Int8, t=60::Int8)
+getSampleDataDeposits(sampleSize::Int64=10, P::Int64=10000, r::Float64=3.875, n::Int=1, t::Int=60)
 Call this function to produce sample datasets showing deposits.
 
-please see, this function generate only sample data with bias (intentionally biased and wrong)
+please see, this function generate only sample data with bias (intentionally biased and wrong, so that a pattern can be analyzed)
 and must not be used for any real calculations.
 
-sampleSize=10:Int8 # number of rows generated
-P=10000::Int64 # Principal amount
-r=3.875::Float64 # Rate of Interest
-n=1::Int8, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
-t=60::Int8 # number of deposit months
+sampleSize::Int64=10 # number of rows generated
+P::Int64=10000 # Principal amount
+r::Float64=3.875 # Rate of Interest
+n::Int=1, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
+t::Int=60 # number of deposit months
     
 """
-function getSampleDataDeposits(; sampleSize=10::Int8, P=10000::Int64, r=3.875::Float64, n=1::Int8, t=60::Int8)
-    dfDP = DataFrame(deposit=["buddy"], principal=P, ROI=r, time=t, intType=["Simple"], compound=[1])
+function getSampleDataDeposits(sampleSize::Int64=10, P::Int64=10000, r::Float64=3.875, n::Int=1, t::Int=60)
+    sampleSize = sampleSize < 5 ? 5 : sampleSize
+    dfDP = DataFrame(deposit=["buddy"], amount=P, ROI=r, time=t, rate=["simple"], compound=[1])
     push!(dfDP, ["CD", P, r, t, "daily", 365])
     push!(dfDP, ["CD", P, r, t, "monthly", 12])
     push!(dfDP, ["CD", P, r, t, "qtr", 4])
     push!(dfDP, ["CD", P, r, t, "annual", 1])
     for i in 1:sampleSize-5
-        push!(dfDP, [string("MF-", i), P, 0.99, t, "-", 1])
+        push!(dfDP, [string("MF-", i), P, 0.00, t, string("assignGroup"), 1])
     end
 
     dfDeposit = select!(dfDP, :,
@@ -133,6 +135,15 @@ function getSampleDataDeposits(; sampleSize=10::Int8, P=10000::Int64, r=3.875::F
             x1 == "buddy" ? getSampleBD(P, r, x2, t) :
             x1 == "CD" ? getSampleCD(P, r, x2, t) : getSampleRD(P, r, x2, t)
         ) => ["Interest", "Total"]
+    )
+    dfDeposit = select!(dfDP, :,
+        [:rate, :Interest, :amount] => ByRow((x1, x2, x3)
+        ->
+            x1 == "assignGroup" ? (x2 * 100) / x3 >= 35 ? "Group A" :
+                                  (x2 * 100) / x3 >= 15 < 35 ? "Group B" :
+                                  (x2 * 100) / x3 >= 0 < 15 ? "Group C" : "Group D"
+            : x1
+        ) => :rate
     )
     return dfDeposit
 end

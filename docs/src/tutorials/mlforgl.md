@@ -82,7 +82,7 @@ GeneralLedger.getSampleFigFunctions("functions.png")
 
 ---
 
-## Using Functions in Machine learning
+## Using Functions
 
 Functions are smart, given an input value, it can always provide an output value.
 
@@ -101,7 +101,7 @@ Machine learning, is data science of finding this missing magical function, whic
 
 ---
 
-## Machine learning without any library
+#### Functions without any library
 
 Let's take an example,
 
@@ -136,7 +136,9 @@ Neural network deep learning is nothing but an art of finding this magical funct
 
 ---
 
-## Machine Learning for Finance
+## Finance Mathematics
+There is no such thing as Finance Math. Math is Math, the mother of all languages.
+However, since our topic of interest is Finance, we will learn Mathematics from Finance perspective, which again is no different, other than more focused on Financial calculations.
 
 Let's take another example, which is more familiar and relevant to Finance community.
 
@@ -152,7 +154,7 @@ Let's take another example, which is more familiar and relevant to Finance commu
 
 #### Buddy Deposit system
 
-let’s say, one borrows money from buddy and return it on a simple yearly calculated interest condition (n=1).
+let’s say, one borrows money from buddy and return it on a simple yearly calculated interest condition (n=1). Lets assume, amount returned to friend has least constraints, like, if amount is returned less than 6 months, friends may not ask for any interest. For calculation purpose, we will keep formula very simple.
 
 ```math
     BD = P (1 + r*t/n)
@@ -189,7 +191,7 @@ Calculation Steps:
 #### Mutual Fund Deposit
 
 ```math
-    MFDeposit = GOK^God*Only*knows
+    MFDeposit = GOK ^ (god*only*knows)
 ```
 
 #### Sample Deposit data
@@ -199,45 +201,110 @@ Let's look at few sample results produced by different deposit types.
 ```@repl
 using Pkg;
 Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
-using GeneralLedger, UnicodePlots, DataFrames;
+using GeneralLedger, UnicodePlots, DataFrames, Statistics;
 
 sampleSize = 100000
-df = GeneralLedger.getSampleDataDeposits(sampleSize, 100000, 3.875, 1, 90);
-show(df)
+df = GeneralLedger.getSampleDataDeposits(sampleSize);
+first(df,5)
 select!(df, :,
     [:deposit, :rate] => ByRow((x1, x2) 
         -> contains(x1, "MF") ? x2 :
-        string(x1,"-",x2)) => :depositType)
-dfG = groupby(df, :depositType)
-dfT = sort(combine(dfG, :Total => mean),[:depositType])
-show(dfT)
+        string(x1,"-",x2)) => :depositType);
+dfG = groupby(df, :depositType);
+dfT = sort(combine(dfG, :Total => mean),[:depositType]);
+show(dfT, 9)
+
 UnicodePlots.barplot(dfT.depositType, dfT.Total_mean, title="Return by deposit", name="", xlabel="amount", ylabel="Deposit Type")
 ```
 ---
 
-## Learning Finance Mathematics
-There is no such thing as Finance Math. Math is Math, the mother of all languages.
-However, since our topic of interest is Finance, we will learn Mathematics from Finance perspective, which again is no different, other than more focused on Financial calculations.
 
 #### Univariate and Multivariate
 
-**Univariate**, statistical analysis
+**Univariate** statistical analysis refers to data analysis, when output depends only on one variable.
 
-#### what is optimization
+**Multivariate** statistical data analysis is applicable where output depends on more than one variables.
 
-#### what is a gradient
+For example, in case of Buddy deposit, your friend promised to pay you back borrowed money with or without any interest or fixed or non-fixed time period (whenever  available). After all, Buddy don't charge interest. In this case, amount received entirely depends on Principal amount borrowed, is a case if simple Univariate analysis.
+
+In other case, when money is deposited as an investment, amount received on maturity depends on Principal amount, rate of interest, duration and interest type etc. is an example of Multivariate statistical analysis.
+
+Let's take a closer look at few `Univariate & Multivariate statistical analysis` example, how amount received on maturity depends on associated variables.
+
+for example, Amount received after a deposit depends on interest rate and time.
+
+```@repl
+using Pkg;
+Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
+using GeneralLedger, CairoMakie;
+
+fileName = "bd_appendPlt.mp4";
+
+rate = [1.875, 2.875, 3.875, 4.875, 5.875]
+deposit = GeneralLedger.Deposit(100_000.0, rate[1], 1.0, 60.0)
+points1 = Observable(Point2f[(0, 0)])
+points2 = Observable(Point2f[(0, 0)])
+points3 = Observable(Point2f[(0, 0)])
+points4 = Observable(Point2f[(0, 0)])
+points5 = Observable(Point2f[(0, 0)])
+# titleText = Observable(0.0) # uncomment to display $$ in title
+
+fig, ax = scatter(points1;
+            figure = (;backgroundcolor = :lightgrey, resolution=(800,600)),
+            axis = (;
+            title="Return by deposit",
+            # title = @lift("Total Return = $($titleText)"),
+            xlabel="time (months)",
+            ylabel="Amount (100k)",
+            xticklabelrotation=pi/3,
+            yticklabelrotation=pi/3,
+            limits = (0, 72, 90, 150)
+            ), label = "\$ $(deposit.principal/1000) k @ $(rate[1]) % simple interest")
+scatter!(ax, points2; label = "\$ $(deposit.principal/1000) k @ $(rate[2]) % simple interest")
+scatter!(ax, points3; label = "\$ $(deposit.principal/1000) k @ $(rate[3]) % simple interest")
+scatter!(ax, points4; label = "\$ $(deposit.principal/1000) k @ $(rate[4]) % simple interest")
+scatter!(ax, points5; label = "\$ $(deposit.principal/1000) k @ $(rate[5]) % simple interest")
+axislegend()
+
+frames = 1:60
+
+record(fig, fileName, frames;
+        framerate = 10) do t
+    deposit.time = t
+    deposit.rate = rate[1]
+    points1[] = push!(points1[], Point2f(t, GeneralLedger.getSampleBDeposit(deposit)[2]/1000))
+    deposit.rate = rate[2]
+    points2[] = push!(points2[], Point2f(t, GeneralLedger.getSampleBDeposit(deposit)[2]/1000))
+    deposit.rate = rate[3]
+    points3[] = push!(points3[], Point2f(t, GeneralLedger.getSampleBDeposit(deposit)[2]/1000))
+    deposit.rate = rate[4]
+    points4[] = push!(points4[], Point2f(t, GeneralLedger.getSampleBDeposit(deposit)[2]/1000))
+    deposit.rate = rate[5]
+    points5[] = push!(points5[], Point2f(t, GeneralLedger.getSampleBDeposit(deposit)[2]/1000))
+    # titleText[] = round(new_point[2], digits=2)
+end
+```
+
+![](bd_appendPlt.mp4)
+
+---
+
+## what is optimization
+
+## what is a gradient
 
 #### Taking Derivatives
 
-#### ForwardDiff, ReverseDiff
+## ForwardDiff, ReverseDiff
 
-#### ChainRules, AutoGrad | AutoDiff (automatic differentiation)
+## ChainRules, AutoDiff
+AutoGrad | AutoDiff (automatic differentiation)
 
-#### Optimization using gradient
+## Optimization using gradient
 
-#### what is gradient descent
+## what is gradient descent
 
-#### UAT Universal Approximation theorem
+## UAT Universal Approximation theorem
 
 As per Wikipedia -
 
@@ -247,24 +314,24 @@ In simple English..
 
 if you set knobs, levers (aka parameters..) of a given UAT function in such a way, this UAT function starts working as the magical function described above (i.e. universal approximation).
 
-#### Linear regression
-#### Taylor Series
-#### Fourier Transformation
+## Linear regression
+## Taylor Series
+## Fourier Transformation
 
-#### Loss function
+## Loss function
 
 Gradient
 Gradient Descent
 
-#### Curse of Dimensionality
+## Curse of Dimensionality
 
-#### Neural network
+## Neural network
 
-#### Neurons
+## Neurons
 
-#### Why we need layers
+## Why we need layers
 
-#### What are activation functions
+## What are activation functions
 
 Training neural networks
 

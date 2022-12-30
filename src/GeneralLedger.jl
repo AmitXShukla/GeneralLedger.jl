@@ -47,5 +47,6 @@ export setColNames, getXLSinDirectory, getArrangedWords, getFuzzyWuzzy, getToken
 export getDuplicateRows, getKeyColumns, setRemDuplicateRows, getCategoryData, getTreeData, getMaskedData
 export getDBConnection, getDSNs, getDrivers, getSQLs, setCloseConnection, runSQL
 export account, department, location, costcenter, operunit, ledger
+export Deposit, getSampleBDeposit
 export getSampleDataTimeTaken, getSampleFigFunctions, getSampleDataDeposits
 end

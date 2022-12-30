@@ -43,6 +43,43 @@ function getSampleFigFunctions(fileName::String="functions.png")
 end
 
 """
+    Deposit{T}
+    defines a data structure for deposit calculations
+"""
+mutable struct Deposit{T}
+    principal::T
+    rate::T
+    compound::T
+    time::T
+end
+
+"""
+    getSampleBDeposit(bd:: Deposit)
+    
+    Call this function to calculate simple yearly interest.
+        principal::T # =10000 # Principal amount
+        rate::T # =3.875  Rate of Interest
+        compound::T # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
+        time::T # number of deposit months
+
+    function getSampleBDeposit(d) # buddy deposit
+        P = d.principal
+        n = d.compound # simple interest calculated per year
+        r = d.rate/100;
+        t = d.time/12;
+        return P * (1 + (r * t) / n) - P, P * (1 + (r * t) / n) # interest, total
+    end
+"""
+function getSampleBDeposit(d::Deposit) # buddy deposit
+    P = d.principal
+    # n = d.compound # simple interest calculated per year
+    n = 1 # simple interest calculated per year
+    r = d.rate / 100
+    t = d.time / 12
+    return P * (1 + (r * t) / n) - P, P * (1 + (r * t) / n) # interest, total
+end
+
+"""
     getSampleBD(P, r, n, t)
     Call this function to calculate simple yearly interest.
 

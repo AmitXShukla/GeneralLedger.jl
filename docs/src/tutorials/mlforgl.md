@@ -73,9 +73,9 @@ for example: height of one person in a concert may be anywhere within possible h
 
 ```@repl
 using Pkg;
-Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
-using GeneralLedger;
-GeneralLedger.getSampleFigFunctions("functions.png")
+using UnicodePlots;
+plt = lineplot([cos], -π/2, 2π, title="Discrete & Continuous functions", name="Continuous")
+scatterplot!(plt, randn(50),randn(50), name="Discrete Function")
 ```
 
 ![](functions.png)
@@ -204,7 +204,7 @@ Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
 using GeneralLedger, UnicodePlots, DataFrames, Statistics;
 
 sampleSize = 100000
-df = GeneralLedger.getSampleDataDeposits(sampleSize);
+df = GeneralLedger.getSampleDepositsData(sampleSize);
 first(df,5)
 select!(df, :,
     [:deposit, :rate] => ByRow((x1, x2) 
@@ -238,7 +238,7 @@ using Pkg;
 Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
 using GeneralLedger, CairoMakie;
 
-fileName = "bd_appendPlt.mp4";
+fileName = "bd_appendPlt.gif";
 
 rate = [1.875, 2.875, 3.875, 4.875, 5.875]
 deposit = GeneralLedger.Deposit(100_000.0, rate[1], 1.0, 60.0)
@@ -285,7 +285,7 @@ record(fig, fileName, frames;
 end
 ```
 
-![](bd_appendPlt.mp4)
+![](bd_appendPlt.gif)
 
 ---
 

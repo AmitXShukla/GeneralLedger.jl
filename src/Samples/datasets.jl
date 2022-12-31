@@ -28,21 +28,6 @@ function getSampleDataTimeTaken(sampleSize::Int64=10)
 end
 
 """
-    getSampleFigFunctions(fileName::String="functions.png")
-Call this function to produce sample graph showing Discrete and Continuous function examples.
-"""
-function getSampleFigFunctions(fileName::String="functions.png")
-    x = 0:5:100
-    f = Figure(backgroundcolor=:orange, resolution=(600, 400))
-    ax1 = Axis(f[1, 1], title="Discrete Function", xlabel="x", ylabel="y")
-    ax2 = Axis(f[1, 2], title="Continuous Function", xlabel="x", ylabel="y")
-    scatter!(ax1, x, x .+ 12)
-    lines!(ax2, x, sin.(x))
-    # f # uncomment this to see when figure when running online
-    save(fileName, f)
-end
-
-"""
     Deposit{T}
     defines a data structure for deposit calculations
 """
@@ -54,7 +39,7 @@ mutable struct Deposit{T}
 end
 
 """
-    getSampleBDeposit(bd:: Deposit)
+    getSampleBDeposit(d:: Deposit)
     
     Call this function to calculate simple yearly interest.
         principal::T # =10000 # Principal amount
@@ -80,30 +65,7 @@ function getSampleBDeposit(d::Deposit) # buddy deposit
 end
 
 """
-    getSampleBD(P, r, n, t)
-    Call this function to calculate simple yearly interest.
-
-    P::Int64=10000 # Principal amount
-    r::Float64=3.875 # Rate of Interest
-    n::Int64=1, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
-    t::Int64=60 # number of deposit months
-
-    function getSampleBD(P, r, n, t) # buddy deposit
-        n =1 # simple interest calculated per year
-        r = r/100;
-        t = t/12;
-        return P, P * (1+(r*t)/n)
-    end
-"""
-function getSampleBD(P, r, n, t) # buddy deposit
-    n = 1 # simple interest calculated per year
-    r = r / 100
-    t = t / 12
-    return P * (1 + (r * t) / n) - P, P * (1 + (r * t) / n) # interest, total
-end
-
-"""
-    getSampleCD(P, r, n, t)
+    getSampleCDeposit(d:: Deposit)
     Call this function to calculate accumulated compound interest.
 
     P::Int64=10000 # Principal amount
@@ -111,67 +73,74 @@ end
     n::Int64=1, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
     t::Int64=60 # number of deposit months
 
-    function getSampleCD(P, r, n, t) # certificate deposit
-        r = r/100;
-        t = t/12;
-        return P, P * (1+r/n) ^ (n*t)
+    function getSampleCDeposit(d::Deposit) # certificate deposit
+        P = d.principal
+        n = d.compound
+        r = d.rate / 100
+        t = d.time / 12
+        return P * (1 + r / n)^(n * t) - P, P * (1 + r / n)^(n * t)# interest, total
     end
 """
-function getSampleCD(P, r, n, t) # certificate deposit
-    r = r / 100
-    t = t / 12
+function getSampleCDeposit(d::Deposit) # certificate deposit
+    P = d.principal
+    n = d.compound
+    r = d.rate / 100
+    t = d.time / 12
     return P * (1 + r / n)^(n * t) - P, P * (1 + r / n)^(n * t)# interest, total
 end
 
 """
-    getSampleRD(P, r, n, t)
+    getSampleRDeposit(d:: Deposit)
     Call this function to calculate Random Interest return.
 
     P::Int=10000 # Principal amount
     r::Float64=3.875 # Rate of Interest
     n::Int=1, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
     t::Int=60 # number of deposit months
-
-    function getSampleRD(P, r, n, t) # random deposit
-        return P, P * (1+randn())
+    
+    function getSampleRDeposit(d::Deposit) # random deposit
+        P = d.principal
+        x = rand(-0.51:0.02:0.99)
+        return P * (1 + x) - P, P * (1 + x) # interest, total
     end
 """
-function getSampleRD(P, r, n, t) # random deposit
+function getSampleRDeposit(d::Deposit) # random deposit
+    P = d.principal
     x = rand(-0.51:0.02:0.99)
     return P * (1 + x) - P, P * (1 + x) # interest, total
 end
 
 """
-getSampleDataDeposits(sampleSize::Int64=10, P::Int64=10000, r::Float64=3.875, n::Int=1, t::Int=60)
-Call this function to produce sample datasets showing deposits.
+    getSampleDepositsData(sampleSize::Int64=10, P::Int64=10000, r::Float64=3.875, n::Int=1, t::Int=60)
 
-please see, this function generate only sample data with bias (intentionally biased and wrong, so that a pattern can be analyzed)
-and must not be used for any real calculations.
+    Call this function to produce sample datasets showing deposits.
+    please see, this function generate only sample data with bias (intentionally biased and wrong, so that a pattern can be analyzed)
+    and must not be used for any real calculations.
 
-sampleSize::Int64=10 # number of rows generated
-P::Int64=10000 # Principal amount
-r::Float64=3.875 # Rate of Interest
-n::Int=1, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
-t::Int=60 # number of deposit months
-    
+    sampleSize::Int64=10 # number of rows generated
+    P::Int64=10000 # Principal amount
+    r::Float64=3.875 # Rate of Interest
+    n::Int=1, # compound frequency - Daily=365, Monthly=12, Qtr=4, Annually=1
+    t::Int=60 # number of deposit months    
 """
-function getSampleDataDeposits(sampleSize::Int64=10, P::Int64=10000, r::Float64=3.875, n::Int=1, t::Int=60)
+function getSampleDepositsData(sampleSize::Int64=10, d::Deposit=Deposit(100_000.0, 2.875, 1.0, 60.0))
     sampleSize = sampleSize < 5 ? 5 : sampleSize
-    dfDP = DataFrame(deposit=["buddy"], amount=P, ROI=r, time=t, rate=["simple"], compound=[1])
-    push!(dfDP, ["CD", P, r, t, "daily", 365])
-    push!(dfDP, ["CD", P, r, t, "monthly", 12])
-    push!(dfDP, ["CD", P, r, t, "qtr", 4])
-    push!(dfDP, ["CD", P, r, t, "annual", 1])
+    dfDP = DataFrame(deposit=["buddy"], amount=d.principal, ROI=d.rate, time=d.time, rate=["simple"], compound=[1.0])
+    push!(dfDP, ["CD", d.principal, d.rate, d.time, "daily", 365.0])
+    push!(dfDP, ["CD", d.principal, d.rate, d.time, "monthly", 12.0])
+    push!(dfDP, ["CD", d.principal, d.rate, d.time, "qtr", 4.0])
+    push!(dfDP, ["CD", d.principal, d.rate, d.time, "annual", 1.0])
     for i in 1:sampleSize-5
-        push!(dfDP, [string("MF-", i), P, 0.00, t, string("assignGroup"), 1])
+        push!(dfDP, [string("MF-", i), d.principal, 0.00, d.time, string("assignGroup"), 1.0])
     end
 
     dfDeposit = select!(dfDP, :,
-        [:deposit, :compound] => ByRow((x1, x2)
-        ->
-            x1 == "buddy" ? getSampleBD(P, r, x2, t) :
-            x1 == "CD" ? getSampleCD(P, r, x2, t) : getSampleRD(P, r, x2, t)
-        ) => ["Interest", "Total"]
+        [:amount, :ROI, :compound, :time, :deposit] =>
+            ByRow((a, r, c, t, d)
+            ->
+                d == "buddy" ? getSampleBDeposit(Deposit(a, r, c, t)) :
+                d == "CD" ? getSampleCDeposit(Deposit(a, r, c, t)) : getSampleRDeposit(Deposit(a, r, c, t))
+            ) => ["Interest", "Total"]
     )
     dfDeposit = select!(dfDP, :,
         [:rate, :Interest, :amount] => ByRow((x1, x2, x3)

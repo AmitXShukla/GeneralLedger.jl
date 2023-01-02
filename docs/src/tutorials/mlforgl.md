@@ -74,11 +74,9 @@ for example: height of one person in a concert may be anywhere within possible h
 ```@repl
 using Pkg;
 using UnicodePlots;
-plt = lineplot([cos], -π/2, 2π, title="Discrete & Continuous functions", name="Continuous")
+plt = lineplot([cos], -π/2, 2π, title="Discrete & Continuous functions", name="Continuous");
 scatterplot!(plt, randn(50),randn(50), name="Discrete Function")
 ```
-
-![](functions.png)
 
 ---
 
@@ -203,7 +201,7 @@ using Pkg;
 Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
 using GeneralLedger, UnicodePlots, DataFrames, Statistics;
 
-sampleSize = 100000
+sampleSize = 100000;
 df = GeneralLedger.getSampleDepositsData(sampleSize);
 first(df,5)
 select!(df, :,
@@ -231,26 +229,26 @@ In other case, when money is deposited as an investment, amount received on matu
 
 Let's take a closer look at few `Univariate & Multivariate statistical analysis` example, how amount received on maturity depends on associated variables.
 
-for example, Amount received after a deposit depends on interest rate and time.
+for example, Amount received after a buddy deposit depends on interest rate and time.
 
 ```@repl
 using Pkg;
 Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
 using GeneralLedger, CairoMakie;
 
-fileName = "bd_appendPlt.gif";
+fileName = "bd_appendPlt1.gif";
 
-rate = [1.875, 2.875, 3.875, 4.875, 5.875]
-deposit = GeneralLedger.Deposit(100_000.0, rate[1], 1.0, 60.0)
-points1 = Observable(Point2f[(0, 0)])
-points2 = Observable(Point2f[(0, 0)])
-points3 = Observable(Point2f[(0, 0)])
-points4 = Observable(Point2f[(0, 0)])
-points5 = Observable(Point2f[(0, 0)])
+rate = [1.875, 2.875, 3.875, 4.875, 5.875];
+deposit = GeneralLedger.Deposit(100_000.0, rate[1], 1.0, 60.0);
+points1 = Observable(Point2f[(0, 0)]);
+points2 = Observable(Point2f[(0, 0)]);
+points3 = Observable(Point2f[(0, 0)]);
+points4 = Observable(Point2f[(0, 0)]);
+points5 = Observable(Point2f[(0, 0)]);
 # titleText = Observable(0.0) # uncomment to display $$ in title
 
 fig, ax = scatter(points1;
-            figure = (;backgroundcolor = :lightgrey, resolution=(800,600)),
+            figure = (;backgroundcolor = :lightgrey, resolution=(600,600)),
             axis = (;
             title="Return by deposit",
             # title = @lift("Total Return = $($titleText)"),
@@ -259,14 +257,14 @@ fig, ax = scatter(points1;
             xticklabelrotation=pi/3,
             yticklabelrotation=pi/3,
             limits = (0, 72, 90, 150)
-            ), label = "\$ $(deposit.principal/1000) k @ $(rate[1]) % simple interest")
-scatter!(ax, points2; label = "\$ $(deposit.principal/1000) k @ $(rate[2]) % simple interest")
-scatter!(ax, points3; label = "\$ $(deposit.principal/1000) k @ $(rate[3]) % simple interest")
-scatter!(ax, points4; label = "\$ $(deposit.principal/1000) k @ $(rate[4]) % simple interest")
-scatter!(ax, points5; label = "\$ $(deposit.principal/1000) k @ $(rate[5]) % simple interest")
-axislegend()
+            ), label = "\$ $(deposit.principal/1000) k @ $(rate[1]) % simple interest");
+scatter!(ax, points2; label = "\$ $(deposit.principal/1000) k @ $(rate[2]) % simple interest");
+scatter!(ax, points3; label = "\$ $(deposit.principal/1000) k @ $(rate[3]) % simple interest");
+scatter!(ax, points4; label = "\$ $(deposit.principal/1000) k @ $(rate[4]) % simple interest");
+scatter!(ax, points5; label = "\$ $(deposit.principal/1000) k @ $(rate[5]) % simple interest");
+axislegend();
 
-frames = 1:60
+frames = 1:60;
 
 record(fig, fileName, frames;
         framerate = 10) do t
@@ -285,13 +283,72 @@ record(fig, fileName, frames;
 end
 ```
 
-![](bd_appendPlt.gif)
+![](bd_appendPlt1.gif)
 
+for example, Amount received after a certificate deposit depends on interest rate , compound type and time.
+
+```@repl
+using Pkg;
+Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
+using GeneralLedger, CairoMakie;
+
+fileName = "bd_appendPlt2.gif";
+
+rate = [1.875, 2.875, 3.875, 4.875, 5.875];
+deposit = GeneralLedger.Deposit(100_000.0, rate[1], 1.0, 60.0);
+points1 = Observable(Point2f[(0, 0)]);
+points2 = Observable(Point2f[(0, 0)]);
+points3 = Observable(Point2f[(0, 0)]);
+points4 = Observable(Point2f[(0, 0)]);
+points5 = Observable(Point2f[(0, 0)]);
+# titleText = Observable(0.0) # uncomment to display $$ in title
+
+fig, ax = scatter(points1;
+            figure = (;backgroundcolor = :lightgrey, resolution=(600,600)),
+            axis = (;
+            title="Return by deposit (Simple compound)",
+            # title = @lift("Total Return = $($titleText)"),
+            xlabel="time (months)",
+            ylabel="Amount (100k)",
+            xticklabelrotation=pi/3,
+            yticklabelrotation=pi/3,
+            limits = (0, 72, 90, 150)
+            ), label = "\$ $(deposit.principal/1000) k @ $(rate[1]) % CD interest");
+scatter!(ax, points2; label = "\$ $(deposit.principal/1000) k @ $(rate[2]) % CD interest");
+scatter!(ax, points3; label = "\$ $(deposit.principal/1000) k @ $(rate[3]) % CD interest");
+scatter!(ax, points4; label = "\$ $(deposit.principal/1000) k @ $(rate[4]) % CD interest");
+scatter!(ax, points5; label = "\$ $(deposit.principal/1000) k @ $(rate[5]) % CD interest");
+axislegend();
+
+frames = 1:60;
+
+record(fig, fileName, frames;
+        framerate = 10) do t
+    deposit.time = t
+    deposit.rate = rate[1]
+    points1[] = push!(points1[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.rate = rate[2]
+    points2[] = push!(points2[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.rate = rate[3]
+    points3[] = push!(points3[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.rate = rate[4]
+    points4[] = push!(points4[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.rate = rate[5]
+    points5[] = push!(points5[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    # titleText[] = round(new_point[2], digits=2)
+end
+```
+
+![](bd_appendPlt2.gif)
 ---
 
-## what is optimization
+## Distributions, Quantile, mean, statistics
+## PDFs
+PDF, CDF
 
 ## what is a gradient
+
+## what is optimization
 
 #### Taking Derivatives
 

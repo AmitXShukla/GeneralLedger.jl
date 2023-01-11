@@ -7,6 +7,11 @@ _This chapter is very detailed, beginner friendly tutorial and assume no prior M
 
 For experienced programmers, please skip to [Use Cases](@ref) section below.
 
+!!! info "Objective"
+
+    Objective and end goal of this tutorial is to analyze, evaluate and predict Organization growth (including but not limited to stock prices, Finance statements), based on technical analysis (stock prices, volumes etc.) and fundamental analysis (Finance Statements, Accounting and sub ledger details) combined together.
+    [GL Processes](@ref) and [GL ERD](@ref).
+
 ## What is AI, ML and Deep Learning
 
 as per Wikipedia
@@ -285,7 +290,7 @@ end
 
 ![](bd_appendPlt1.gif)
 
-for example, Amount received after a certificate deposit depends on interest rate , compound type and time.
+for example, Amount received after a certificate deposit depends on interest rate, compound type and time.
 
 ```@repl
 using Pkg;
@@ -340,17 +345,198 @@ end
 ```
 
 ![](bd_appendPlt2.gif)
+
+
+Amount received after a certificate deposit depends on different compound interest rate type and time.
+
+```@repl
+using Pkg;
+Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
+using GeneralLedger, CairoMakie;
+
+fileName = "bd_appendPlt3.gif";
+
+rate = [1.875, 2.875, 3.875, 4.875, 5.875];
+compound = [1.0, 4.0, 12.0, 365.0]
+deposit = GeneralLedger.Deposit(100_000.0, rate[3], 1.0, 60.0);
+points1 = Observable(Point2f[(0, 0)]);
+points2 = Observable(Point2f[(0, 0)]);
+points3 = Observable(Point2f[(0, 0)]);
+points4 = Observable(Point2f[(0, 0)]);
+points5 = Observable(Point2f[(0, 0)]);
+# titleText = Observable(0.0) # uncomment to display $$ in title
+
+fig, ax = scatter(points1;
+            figure = (;backgroundcolor = :lightgrey, resolution=(600,600)),
+            axis = (;
+            title="Return by deposit ($(rate[3]) , different compound types)",
+            # title = @lift("Total Return = $($titleText)"),
+            xlabel="time (months)",
+            ylabel="Amount (100k)",
+            xticklabelrotation=pi/3,
+            yticklabelrotation=pi/3,
+            limits = (0, 72, 100, 130)
+            ), label = "\$ $(deposit.principal/1000) k @ annual compound interest");
+scatter!(ax, points2; label = "\$ $(deposit.principal/1000) k @ qtr compound interest");
+scatter!(ax, points3; label = "\$ $(deposit.principal/1000) k @ monthly compound interest");
+scatter!(ax, points4; label = "\$ $(deposit.principal/1000) k daily compound interest");
+axislegend();
+
+frames = 1:60;
+
+record(fig, fileName, frames;
+        framerate = 10) do t
+    deposit.time = t
+    deposit.compound = compound[1]
+    points1[] = push!(points1[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.compound = compound[2]
+    points2[] = push!(points2[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.compound = compound[3]
+    points3[] = push!(points3[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.compound = compound[4]
+    points4[] = push!(points4[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    # titleText[] = round(new_point[2], digits=2)
+end
+```
+
+![](bd_appendPlt3.gif)
+
 ---
 
-## Distributions, Quantile, mean, statistics
-## PDFs
-PDF, CDF
+## Statistics
+So far, we have seen examples of simple, compound interest certificate deposit types.
+Now let's dig in deeper and move onto another type of deposit types, i.e. Mutual Funds, stocks, options equity etc.
 
-## what is a gradient
+Before we jump on to more advance Machine learning training, model and predictive analytics, let's spend time on analysis and visualizing data first.
+
+Above analysis is the key to machine learning and predictive analytics. Understanding below statistical concepts lay strong foundations for ML/DL modeling later on.
+
+In this section, we will focus on performing Univariate analysis on Mutual fund data, as you can see in below data sample, that rate type, compound interest type does't impact MF performance, in this dataset, outcome depends on only one variable, "Group Type".
+
+**Once we get a hang of analyzing data on one variable, later we will introduce more variables like MF Type, contents, market type etc.
+Then in later section, we will train our neural network on multiple inputs.**
+
+```@repl
+# first draw one million data samples from GeneralLedger.jl package
+# groupby data by deposit type
+# as you can see, we are focused on MF type data for now
+# filter data to include only Mutual Funds
+
+using Pkg;
+Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl.git");
+using GeneralLedger, CairoMakie, DataFrames, Statistics;
+
+sampleSize = 1000000;
+df = GeneralLedger.getSampleDepositsData(sampleSize);
+subset!(df, :deposit => x -> contains.(x, "MF"));
+first(df, 5)
+dfG = groupby(df, [:rate]);
+combine(dfG, nrow, proprow, groupindices, :Total => mean => :mean, :Total => std => :std)
+
+# filter data to include only Group A
+dfA = subset(df, :rate => x -> isequal.(x, "Group A"));
+describe(dfA.Total)
+
+# as you can see, above data set is divided in 4 groups and each group has different type of outcomes.
+# we will assume, these groups have further characteristics, which lead them to produce outcome in certain ranges
+# for example, Group A invests in certain types of equities which performed better or worse than others,
+# however, with in a group, outcome are somewhat consistent (like in certain range),
+# abnormal distribution with in one certain group is another topic for detail analysis
+# for now, we will only focus on doing analytics at one group level.
+
+# let's visualize groups altogether and individually in a bar plot to observe distributions
+
+sampleSize = 10000;
+df = GeneralLedger.getSampleDepositsData(sampleSize);
+subset!(df, :deposit => x -> contains.(x, "MF"));
+dfG = groupby(df, [:rate]);
+dfC = combine(dfG, nrow, proprow, groupindices, :Total => mean => :mean, :Total => std => :std);
+
+figBarPlot = Figure(backgroundcolor=:lightgrey, resolution=(600,400), fonts = (; regular = "CMU Serif"));
+axFBP = Axis(figBarPlot[1,1], title="Rows, Stats by Mutual Fund Group", xlabel="MF Groups", xgridvisible=false,
+xticklabelrotation=pi/3, yticklabelrotation=pi/3, xticks = (1:4, dfC.rate));
+plt = CairoMakie.barplot!(axFBP, dfC.groupindices, dfC.nrow,
+        stack = dfC.nrow,
+        color = dfC.nrow,
+        label = "Row Distributions");
+CairoMakie.lines!(axFBP, dfC.groupindices, dfC.mean/100,
+        stack = convert.(Int64, round.(dfC.mean/100)),
+        color = convert.(Int64, round.(dfC.mean/100)),
+        label = "mean (in 100s)");
+CairoMakie.scatterlines!(axFBP, dfC.groupindices, dfC.std/4,
+        label = "std (in 250s)" );
+axislegend(position = :ct);
+
+save("group_data.png", figBarPlot);
+
+# Normal |Gaussian, Binomial, Poisson, Exponential
+
+# what are mean, mode, median
+# Moments e.g mean, variance, skewness, and kurtosis), entropy, and other properties
+
+```
+
+![](group_data.png)
+
+### Probability and Distributions
+what is a statistical data probability distribution anyway?
+
+in simple english, we tend to represent a set of data by a representative value which would approximately define the entire collection. This representative value is called the measure of central tendency, and the name suggests that it is a value around which the data is centred. These central tendencies are mean, median and mode.
+
+For example, give a set of 100k Mutual Fund or Stock prices results, we want to have a general idea of about how each Mutual Fund or stock prices is performing in over all market conditions.
+
+And given, how data is distributed across central tendency is defined as Distributions. Before we start looking at different distributions types like Normal | Gaussian, Poisson, Exponential. Let's understand basic of probability and few probability distribution functions.
+
+Probability and Distributions help us understand general data tendencies in statistical analysis.
+Let's dig in some details to learn from examples.
+
+!!! note "what's the point of learning statistics for Finance ML"
+    If you are wondering, why we even care of learning probability, statistics, algebra and calculus functions for the sake of Finance Analytics.
+    It's because building AI, is all about using mathematics to find statistical association to rationally predict outcome of an event given a set of inputs, than casual reasoning.
+
+    As we progress, you will see, how learning statistical associations and using calculus for automation in small steps,
+    lead to performing statistical tasks, automate predictive analytics, which are fast improved fact based statistical association rather than casual reasoning, and often outperforms human intuitive analytics.
+
+## Probability Distributions Functions (PDFs)
+
+#### Probability
+A probability event is defined as set of outcomes of an experiment. In simpler words, Probability is likelihood of occurrence of an event.
+
+#### Sample space
+All set of possible set of outcomes of an experiment is the sample space.
+
+let's assume, given there are 4 possible directions (North, South, East, West).
+
+- Probability of person walking in North Direction is 1/4. Given Sample space (N, S, E, W).
+- Probability of person walking in North(ish) Direction is 3/8. Given Sample space is (N, NE, NW, S, SE, SW, E, W).
+- The probability of occurrence of any event lies between 0 and 1.
+- The sum of all the probabilities of outcomes should be equal to 1.
+
+`Determining statistical probability accurately depends on context and sample space.`
+
+#### Probability Distributions Functions (PDFs)
+Probability Distribution functions (referred as PDFs), not to be confused with Probability density function (PDF),
+is the mathematical function that gives the probabilities of occurrence of different possible outcomes for an experiment. It is a mathematical description of a random phenomenon in terms of its sample space and the probabilities of events (subsets of the sample space).
+
+`what's the point of learning PDFs`
+
+
+PDF, PMF, CDF
+
+Probability density/mass functions (pdf) and their logarithm (logpdf)
+
+# Distributions
+Normal | Gaussian, Poisson, Exponential, pdf
+
+### what are mean, mode, median
+krutis, entropy, etc.
+
+
+## Hypothesis, p - value
+
+## what is a gradient, derivatives, gradients, Jacobians, Hessians
 
 ## what is optimization
-
-#### Taking Derivatives
 
 ## ForwardDiff, ReverseDiff
 
@@ -377,12 +563,11 @@ if you set knobs, levers (aka parameters..) of a given UAT function in such a wa
 
 ## Loss function
 
-Gradient
-Gradient Descent
+## Gradient & Gradient Descent
 
 ## Curse of Dimensionality
 
-## Neural network
+## what is a Neural network
 
 ## Neurons
 
@@ -390,7 +575,9 @@ Gradient Descent
 
 ## What are activation functions
 
-Training neural networks
+## Training neural networks
+
+## Predicting results
 
 What is a neural network
 A neural network is the magical function:

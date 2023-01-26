@@ -1,4 +1,7 @@
 # Self Service Analytics
+
+---
+
 In the previous chapter, we learned how to extract, load and transform data.
 Often, ERP system use RDBMS database to store data in normalized forms.
 However, recently, due to advancements in cloud computing, ELT Data lakes gained popularity to perform data analysis, high performance parallel computing in cloud environments.
@@ -27,7 +30,8 @@ A typical ERP modules list looks like below diagram.
 
 ![ERP Modules](https://github.com/AmitXShukla/AmitXShukla.github.io/raw/master/blogs/PlutoCon/ERP_modules.png)
 
-#### Current Solutions
+## Current Solutions
+
 Big Organizations have been using big ERP systems like **SAP, Oracle, PeopleSoft, Coupa, Workday** etc. systems over few decades now and 
 Recent popularity of softwares like **Quickbooks, NetSuite, Tally** in medium, small organizations are proof that ERP are the way to manage any business successfully.
 
@@ -39,7 +43,7 @@ A typical ERP data flow process looks like below diagram.
 
 ![GL Processes](https://github.com/AmitXShukla/AmitXShukla.github.io/raw/master/blogs/PlutoCon/gl.png)
 
-#### Problem Statement
+## Problem Statement
 
 *"Read, Write and Understand"* data are three aspects of any ERP system.
 
@@ -52,14 +56,14 @@ I will show some sample reports I built in Pluto last year for Pandemic reportin
 
 Point is, How easily, Pluto can create real time ad-hoc, *Reactive* dashboard analytics to support critical business operations.
 
-#### understanding Finance, Supply chain data
+## understanding Finance, Supply chain data
 
 A typical Finance statement look like this.
 [click here](https://s2.q4cdn.com/470004039/files/doc_financials/2020/q4/FY20_Q4_Consolidated_Financial_Statements.pdf)
 
 Let's first create chartfields to support General Ledger finance books accounting structure, this accounting structure will support Ledger Analytics and should be interpreted as data structure responsilbe to create Finance Statements.
 
-## Examples
+### Examples
 
 below are sample data sets,
 
@@ -75,7 +79,7 @@ Pkg.add(url="https://github.com/AmitXShukla/GeneralLedger.jl")
 using GeneralLedger
 ```
 
-#### Accounts Dimension
+## Accounts Dimension
 
 ```@repl
 using DataFrames, Dates
@@ -106,7 +110,7 @@ accounts = DataFrame(AS_OF_DATE=Date("1900-01-01", dateformat"y-m-d"),
 accounts[collect(1:5:35),:]
 ```
 
-#### Department Dimension
+## Department Dimension
 
 ```@repl
 using DataFrames, Dates
@@ -128,7 +132,7 @@ dept = DataFrame(AS_OF_DATE=Date("2000-01-01", dateformat"y-m-d"),
 dept[collect(1:5),:]
 ```
 
-#### Location Dimension
+## Location Dimension
 
 ```@repl
 using DataFrames, Dates
@@ -147,7 +151,7 @@ location = DataFrame(AS_OF_DATE=Date("2000-01-01", dateformat"y-m-d"),
 							LOCA_TYPE="Physical");
 location[:,:]
 ```
-#### visuals
+## visuals
 
 ```@repl
 using DataFrames, Plots, Dates
@@ -208,7 +212,9 @@ plot(p1, p2, p3, layout = (3, 1), legend = false)
 
 ```
 
-## Finance Ledger , Balance Sheet, Income Statement and Cash Flow
+## Financial Statements
+
+### Finance Ledger, Balance Sheet, Income, Cash Flow Statements
 
 below is sample Finance Ledger Data
 
@@ -503,3 +509,9 @@ plot_data_a = gdf_plot[(
 		lw=3)
 
 ```
+
+## SEC Filings
+
+## Stock prices
+
+## volume charts

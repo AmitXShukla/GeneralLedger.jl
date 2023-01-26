@@ -11,7 +11,6 @@ GIven these accounting entries, its possible to predict Organization Finance gro
 There are so many different GL processes and lot of these processes depend on how organization manage their finance and accounting department,
 Purpose of this package is focused on read, understand data, rather how data is written into system, which is mostly handled by ERP systems.
 
-
 ![ERP Modules](https://github.com/AmitXShukla/AmitXShukla.github.io/raw/master/blogs/PlutoCon/ERP_modules.png)
 
 ![GL Processes](https://github.com/AmitXShukla/AmitXShukla.github.io/raw/master/blogs/PlutoCon/gl.png)

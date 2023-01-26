@@ -1,5 +1,7 @@
 # About General Ledger
 
+---
+
 ## what is General Ledger
 
 GL serves as core of any Financial Management system.
@@ -28,13 +30,14 @@ Technical analysis strongly believes that at any given point of time, stock pric
 
 ## Fundamental Analysis
 
-is the process of forecasting future Organization growth or stock prices based on studying company financial statements like Income Statements, Cash Flow and Balance Sheets.
+is the process of forecasting future Organization growth or stock prices based on studying company [Financial Statements](@ref) like Finance Ledger, Balance Sheet, Income, Cash Flow Statements.
 
 ## Techno-Fundamental Analysis
 
 In this notebook and all my follow-up GL notebooks, I am proposing to use 3rd type of analysis.
 With the use of Machine Learning, one can apply ML algorithms to GL and SUB Ledger (accounting entries) Books.
-Techno-fundamental analysis is not new, however, its seen very difficult because its requires big data and large computation.
+
+`Techno-fundamental analysis is not new, however, its seen very difficult because its requires big data and large computation.`
 
 Julia language provides fast computations for large data sets and great assets for Statistical programming.
 
@@ -42,7 +45,7 @@ Julia language provides fast computations for large data sets and great assets f
 
 In a nutshell, GL is simply about Credit & Debit, You Credit you saving accounts once you generate revenue on your sales, and make money. You debit your cash accounts because you have to pay your workforce, or invest in your assets.
 
-Credit & Debit difference, is for you to keep, and totally up to you decide how to wisely spend you earnings.
+Credit & Debit difference (often mistakenly interpreted as Organization growth) is for you to keep, and totally up to you decide how to wisely spend you earnings and eventually drive Organization's business process contributing to growth, vision and goals.
+
 Obviously, its not this simple, its a typical for large Organizations to employ 1000+ people just to do these operations.
 Due to complexity of these business processes It's very easy to get distracted and lose focus, So throughout this ML_for_GL journey discussed in this package, we will stick to these fundamentals and quickly come back to core GL and avoid jumping into sub-ledger operations too much in depth.
-

@@ -1,5 +1,22 @@
 # Machine Learning for General Ledger
 
+---
+
+In this chapter, we will learn the **basics of Machine learning concepts** in context of real world Finance data.
+
+- [About ML4GL](@ref)
+- [What is AI, ML and Deep Learning](@ref)
+- [What is data](@ref)
+- [What is a function](@ref)
+- [Discrete Functions](@ref)
+- [Continuous Functions](@ref)
+- [Using Functions](@ref)
+- [Functions without any library](@ref)
+- [Finding magical function](@ref)
+
+## About ML4GL
+
+---
 This tutorial is gentle introduction to understand deep learning concepts with help of real life examples.
 This chapter demonstrates, how to train Finance data on given dataset and predict values.
 
@@ -15,7 +32,6 @@ For experienced programmers, please skip to [Use Cases](@ref) section in later c
 ## What is AI, ML and Deep Learning
 
 ---
-
 as per Wikipedia
 The term "artificial intelligence" is intelligence demonstrated by machines, as opposed to natural intelligence displayed by humans and animals. Major AI researchers, now define AI in terms of rationality and acting rationally, which does not limit how intelligence can be articulated.
 
@@ -36,16 +52,14 @@ here are new AI, ML & DL definitions.
 
 ![AI ML DL](../images/aimldl.png)
 
+## What is data
+
 ---
-
-## Data
-
 Data is useful information described in terms of numbers, text, audio, video, images or any other format which can be read, write and understood in computers.
 
+## What is a function
+
 ---
-
-## Functions
-
 ```math
     y = f(x)
 ```
@@ -54,6 +68,7 @@ In functional programming languages, Function is defined as an object, which tak
 
 ## Discrete Functions
 
+---
 Give a set or range of input values, if a function produces discrete and separate output (unconnected values), is a discrete function.
 for example: number of people in a concert
 
@@ -67,6 +82,7 @@ for example: number of people in a concert
 
 ## Continuous Functions
 
+---
 Give a set or range of input values, if a function produces output which can take any value with in a finite or infinite interval (connected values), is a continuous function.
 for example: height of one person in a concert may be anywhere within possible heights from 4ft to 7.2ft.
 
@@ -112,10 +128,9 @@ Let's pretend, if we have a magical function which given an input produces a rat
 
 Machine learning, is data science of finding this missing magical function, which given an input produces a rationally acceptable output.
 
----
-
 ## Functions without any library
 
+---
 Let's take an example,
 
 Time taken to travel between two cities via Air, Bus, Train or personal vehicle depends mostly depends on speed and distance. However, there are other factors like weather, season, population or faults, which may occasionally impact travel time.
@@ -134,6 +149,7 @@ Let's capture these assumptions as bias for now._
 
 ## Finding magical function
 
+---
 Let's assume that we don't know "time taken" formula or some reason like we don't exactly know speed of UFO or Jet Pack, how else we would know how much time it’s going to take to reach to destination when facts are unknown.
 
 Answer may surprise you,

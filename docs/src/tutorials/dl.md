@@ -192,7 +192,7 @@ Calculation Steps:
     A = $133,724.24
 ```
 
-### Mutual Fund Deposit
+-- ### Mutual Fund Deposit
 
 ```math
     MFDeposit = GOK ^ (god*only*knows)
@@ -552,22 +552,21 @@ save("prob.png", fig);
 
 --# Probability axioms
 
-- The probability of occurrence of any event lies between 0 and 1. 
+- The probability of occurrence of any event lies between 0 and 1.
     ``P(X) \in (0,1)``
-- The sum of all the probabilities of outcomes should be equal to 1. 
+- The sum of all the probabilities of outcomes should be equal to 1.
     ``P(\Omega) = 1``
 - For mutually exclusive events, sum of probabilities is equal to sum of individual event probabilities.
     ``P\left(\bigcup _{i=1}^{\infty }E_{i}\right)=\sum _{i=1}^{\infty }P(E_{i}).``
 
 --# Probability consequences
 
-- The probability of occurrence of any event lies between 0 and 1. 
+- The probability of occurrence of any event lies between 0 and 1.
     ``P(X) \in (0,1)``
-- The sum of all the probabilities of outcomes should be equal to 1. 
+- The sum of all the probabilities of outcomes should be equal to 1.
     ``P(\Omega) = 1``
 - For mutually exclusive events, sum of probabilities is equal to sum of individual event probabilities.
     ``P\left(\bigcup _{i=1}^{\infty }E_{i}\right)=\sum _{i=1}^{\infty }P(E_{i})``
-
 
 --# PDFs
 

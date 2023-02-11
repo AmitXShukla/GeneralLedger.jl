@@ -1,11 +1,123 @@
-# Finance Mathematics
+# Finance Data
 
 ---
 
-There is no such thing as Finance Math. Math is Math, the mother of all languages.
-However, since our topic of interest is Finance, we will learn Mathematics from Finance perspective, which again is no different, other than more focused on Financial calculations.
+In this chapter, we will learn the **basics of Data** in context of real world Finance data.
 
-Let's take another example, which is more familiar and relevant to Finance community.
+- [Financial Data](@ref)
+  - [Numerical Data](@ref)
+  - [Categorical Data](@ref)
+  - [Qualitative Data](@ref)
+  - [Quantitative Data](@ref)
+  - [Random Data](@ref)
+  - [Finite Data](@ref)
+  - [Infinite Data](@ref)
+  - [Univariate Multivariate](@ref)
+- [Finance Data Example](@ref)
+  - [Buddy Deposit system](@ref)
+  - [Certificate Deposit with complex compound interest](@ref)
+  - [Mutual Fund Deposit](@ref)
+  - [Sample Deposit Data](@ref)
+  - [Univariate and Multivariate analysis](@ref)
+
+## Financial Data
+
+---
+
+**what is data:**
+Data is useful information described in terms of numbers, text, audio, video, images or any other format which can be read, write and understood in computers.
+
+There is no such thing as Finance Math or Finance Data. Math is Math, the mother of all languages, and data is an object containing useful information.
+However, since our topic of interest is Finance, we will learn Mathematics from Finance data perspective, which again is no different, other than more focused on Financial statistical data analysis.
+
+## Numerical Data
+
+---
+As data can exist in any format in computers like images, video, audio or characters, as long as it can be represented in forms of numbers, is Numerical Data.
+
+for example, a color can also be described in form of combinations of RGB values or grey scale, which when stored in computer memory is in form of numbers, it numerical data.
+
+Presenting data in format of numbers, eventually allows numerical analysis to understand patterns in data.
+
+### Mutual Fund ROI example
+
+Group | Stock | ROI (%) |
+--- | --- | --- |
+A|AAPL|5.6|
+A|TSLA|5.6|
+B|GOOGLE|4.3|
+B|TSLA|4.3|
+B|NIKE|4.3|
+C|MSFT|3.3|
+C|NIKE|3.3|
+..|..|..|
+
+```@example
+using UnicodePlots; # hide
+
+tbl = (group=["A","A","B","B","B","C","C"], stock=["AAPL","TSLA","GOOG","TSLA","NIKE","MSFT","NIKE"], ROI=[5.6,5.6,4.3,4.3,4.3,3.3,3.3]); # hide
+dataROI = barplot(string.(tbl.group,"|",tbl.stock), tbl.ROI, ylabel="group", xlabel="ROI %", title="ROI Data", color=:red); # hide
+dataROI
+```
+
+```@example
+using UnicodePlots; # hide
+
+continuosROI = histogram(randn(100_000) .* .1, nbins=40, vertical=true, height=10); # hide
+continuosROI
+```
+
+## Categorical Data
+
+---
+When a data set belongs to a set of finite possible values, is known as categorical data.
+
+as shown in [Mutual Fund ROI example](@ref), one Stock may belong to one or more groups. `Group` of funds in this case can be referred as Categorical data.
+`Group= A | B | C` is an example of categorical data.
+
+## Qualitative Data
+
+---
+Qualitative data in statistical analysis often is understood in terms of properties that approximates and characterizes.
+
+as shown in [Mutual Fund ROI example](@ref), `AAPL & TSLA` seems to be leading scorer in a given group. This qualitative descriptive assessment observes and characterize properties and patterns in a given dataset.
+
+## Quantitative Data
+
+---
+In contrast with Qualitative Data, Quantitative data is anything that can be counted or measured.
+
+## Random Data
+
+---
+Random data is an assignment of a numerical value to each possible outcome of an event space. It is often termed as any possible outcome from a [Probability space](@ref).
+
+## Finite Data
+
+---
+It can be defined as data which can be counted.
+
+for example, in above [Mutual Fund ROI example](@ref), there are 3 possible Groups (A,B,C) which can can further contain 5 different type of stocks (AAPL, GOOG, MSFT, NIKE & TSLA).
+
+## Infinite Data
+
+---
+It can be defined as data which can NOT be counted.
+
+for example, in above [Mutual Fund ROI example](@ref), any given group can have any ROI between 3.3 and 5.6.
+As there can be infinite decimal ROI values in between, it can not be counted.
+
+## Univariate Multivariate
+
+---
+**Univariate** statistical analysis refers to data analysis, when output depends only on one variable.
+
+**Multivariate** statistical data analysis is applicable where output depends on more than one variables.
+
+## Finance Data Example
+
+---
+Let's review some other examples, which are more familiar and relevant to Finance community.
 
 ```html
     BD = Buddy Deposit
@@ -17,8 +129,9 @@ Let's take another example, which is more familiar and relevant to Finance commu
     n = compound (365 = daily, 12=monthly, 1=yearly)
 ```
 
-### Buddy Deposit system
+## Buddy Deposit system
 
+---
 let’s say, one borrows money from buddy and return it on a simple yearly calculated interest condition (n=1). Lets assume, amount returned to friend has least constraints, like, if amount is returned less than 6 months, friends may not ask for any interest. For calculation purpose, we will keep formula very simple.
 
 ```math
@@ -28,7 +141,9 @@ let’s say, one borrows money from buddy and return it on a simple yearly calcu
 Using above formula, one can safely predict,
 The total amount accrued, principal plus interest, with simple interest on a principal of `$100,000.00` at a rate of `3.875%` per year over `7.5` years is `$129,062.50`.
 
-### Certificate Deposit, with complex compound interest
+## Certificate Deposit with complex compound interest
+
+---
 
 ```math
     CD = P (1 + r/n)^n*T
@@ -53,13 +168,17 @@ Calculation Steps:
     A = $133,724.24
 ```
 
-### Mutual Fund Deposit
+## Mutual Fund Deposit
+
+---
 
 ```math
     MFDeposit == GOK <=> god*only*knows
 ```
 
-### Sample Deposit data
+## Sample Deposit Data
+
+---
 
 Let's look at few sample results produced by different deposit types.
 
@@ -81,7 +200,7 @@ select!(dfT, :, :Total_mean => (x -> round.(x, digits=2)) => :Total_mean)
 mdtable(first(dfT, 9), latex=false)
 ```
 
-## Univariate and Multivariate
+## Univariate and Multivariate analysis
 
 ---
 
@@ -89,7 +208,7 @@ mdtable(first(dfT, 9), latex=false)
 
 **Multivariate** statistical data analysis is applicable where output depends on more than one variables.
 
-For example, in case of Buddy deposit, your friend promised to pay you back borrowed money with or without any interest or fixed or non-fixed time period (whenever  available). After all, Buddy don't charge interest. In this case, amount received entirely depends on Principal amount borrowed, is a case if simple Univariate analysis.
+For example, in case of [Buddy Deposit system](@ref), your friend promised to pay you back borrowed money with or without any interest or fixed or non-fixed time period (whenever  available). After all, Buddy don't charge interest. In this case, amount received entirely depends on Principal amount borrowed, is a case if simple Univariate analysis.
 
 In other case, when money is deposited as an investment, amount received on maturity depends on Principal amount, rate of interest, duration and interest type etc. is an example of Multivariate statistical analysis.
 

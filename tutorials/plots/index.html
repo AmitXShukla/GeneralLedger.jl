@@ -88,22 +88,22 @@
      Row │ LEDGER   FISCAL_YEAR  PERIOD  ORGID     OPER_UNIT  ACCOUNT  DEPT    ⋯
          │ String   Int64        Int64   String    String     Int64    Int64   ⋯
 ─────────┼──────────────────────────────────────────────────────────────────────
-       1 │ Actuals         2020       1  ABC Inc.  Region C     13000   1300   ⋯
-       2 │ Actuals         2020       1  ABC Inc.  Region B     38000   1200
-       3 │ Actuals         2020       1  ABC Inc.  Region A     45000   1500
-       4 │ Actuals         2020       1  ABC Inc.  Region C     24000   1400
-       5 │ Actuals         2020       1  ABC Inc.  Region B     25000   1500   ⋯
-       6 │ Actuals         2020       1  ABC Inc.  Region A     33000   1400
-       7 │ Actuals         2020       1  ABC Inc.  Region C     23000   1500
-       8 │ Actuals         2020       1  ABC Inc.  Region B     18000   1500
+       1 │ Actuals         2020       1  ABC Inc.  Region A     39000   1500   ⋯
+       2 │ Actuals         2020       1  ABC Inc.  Region A     16000   1100
+       3 │ Actuals         2020       1  ABC Inc.  Region C     30000   1400
+       4 │ Actuals         2020       1  ABC Inc.  Region A     12000   1100
+       5 │ Actuals         2020       1  ABC Inc.  Region B     13000   1500   ⋯
+       6 │ Actuals         2020       1  ABC Inc.  Region C     17000   1500
+       7 │ Actuals         2020       1  ABC Inc.  Region A     44000   1100
+       8 │ Actuals         2020       1  ABC Inc.  Region A     36000   1300
     ⋮    │    ⋮          ⋮         ⋮        ⋮          ⋮         ⋮       ⋮     ⋱
- 2799994 │ Budget          2021      12  ABC Inc.  Region A     28000   1100   ⋯
- 2799995 │ Budget          2021      12  ABC Inc.  Region A     36000   1300
- 2799996 │ Budget          2021      12  ABC Inc.  Region C     25000   1100
- 2799997 │ Budget          2021      12  ABC Inc.  Region C     16000   1300
- 2799998 │ Budget          2021      12  ABC Inc.  Region B     39000   1100   ⋯
- 2799999 │ Budget          2021      12  ABC Inc.  Region C     40000   1200
- 2800000 │ Budget          2021      12  ABC Inc.  Region C     37000   1400
+ 2799994 │ Budget          2021      12  ABC Inc.  Region C     43000   1200   ⋯
+ 2799995 │ Budget          2021      12  ABC Inc.  Region B     38000   1400
+ 2799996 │ Budget          2021      12  ABC Inc.  Region A     14000   1300
+ 2799997 │ Budget          2021      12  ABC Inc.  Region A     16000   1200
+ 2799998 │ Budget          2021      12  ABC Inc.  Region C     26000   1400   ⋯
+ 2799999 │ Budget          2021      12  ABC Inc.  Region C     18000   1300
+ 2800000 │ Budget          2021      12  ABC Inc.  Region B     39000   1300
                                               2 columns and 2799985 rows omitted</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; # Create Finance Statements
        
        ld = &quot;Actuals&quot;</code><code class="nohighlight hljs ansi" style="display:block;">&quot;Actuals&quot;</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; rg = &quot;Region B&quot;</code><code class="nohighlight hljs ansi" style="display:block;">&quot;Region B&quot;</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; yr = 2020</code><code class="nohighlight hljs ansi" style="display:block;">2020</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; qtr = 1</code><code class="nohighlight hljs ansi" style="display:block;">1</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; ld_p = &quot;Actuals&quot;</code><code class="nohighlight hljs ansi" style="display:block;">&quot;Actuals&quot;</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; rg_p = &quot;Region B&quot;</code><code class="nohighlight hljs ansi" style="display:block;">&quot;Region B&quot;</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; yr_p = 2020</code><code class="nohighlight hljs ansi" style="display:block;">2020</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; qtr_p = 1</code><code class="nohighlight hljs ansi" style="display:block;">1</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; ldescr = unique(location.DESCR)</code><code class="nohighlight hljs ansi" style="display:block;">12-element Vector{String}:
@@ -177,22 +177,22 @@
  Row │ FY     Qtr    Org       Accounts                Dept      Loc           ⋯
      │ Int64  Int64  String    String                  String    String        ⋯
 ─────┼──────────────────────────────────────────────────────────────────────────
-   1 │  2020      1  Region B  STATISTICS              HR        New York      ⋯
-   2 │  2020      1  Region B  ASSETS                  OTHERS    Cleveland
-   3 │  2020      1  Region B  NON-OPERATING_EXPENSES  OTHERS    San Francisco
-   4 │  2020      1  Region B  LIABILITIES             OTHERS    Cleveland
-   5 │  2020      1  Region B  NET_WORTH               SALES     Cleveland     ⋯
-   6 │  2020      1  Region B  NON-OPERATING_EXPENSES  HR        Atlanta
-   7 │  2020      1  Region B  REVENUE                 SALES     Minneapolis
-   8 │  2020      1  Region B  STATISTICS              BUSINESS  Philadelphia
+   1 │  2020      1  Region B  OPERATING_EXPENSES      OTHERS    New York      ⋯
+   2 │  2020      1  Region B  LIABILITIES             OTHERS    Cleveland
+   3 │  2020      1  Region B  NET_WORTH               OTHERS    Chicago
+   4 │  2020      1  Region B  NON-OPERATING_EXPENSES  BUSINESS  Kansas City
+   5 │  2020      1  Region B  NET_WORTH               IT        Richmond      ⋯
+   6 │  2020      1  Region B  LIABILITIES             OTHERS    Chicago
+   7 │  2020      1  Region B  ASSETS                  IT        New York
+   8 │  2020      1  Region B  OPERATING_EXPENSES      SALES     Boston
   ⋮  │   ⋮      ⋮       ⋮                ⋮                ⋮            ⋮       ⋱
- 414 │  2020      1  Region B  STATISTICS              SALES     Dallas        ⋯
- 415 │  2020      1  Region B  ASSETS                  IT        Philadelphia
- 416 │  2020      1  Region B  NET_WORTH               SALES     Philadelphia
- 417 │  2020      1  Region B  OPERATING_EXPENSES      IT        Kansas City
- 418 │  2020      1  Region B  ASSETS                  OTHERS    St. Louis     ⋯
- 419 │  2020      1  Region B  STATISTICS              IT        St. Louis
- 420 │  2020      1  Region B  REVENUE                 BUSINESS  Kansas City
+ 414 │  2020      1  Region B  OPERATING_EXPENSES      OTHERS    Kansas City   ⋯
+ 415 │  2020      1  Region B  LIABILITIES             HR        Dallas
+ 416 │  2020      1  Region B  REVENUE                 HR        Minneapolis
+ 417 │  2020      1  Region B  ASSETS                  OTHERS    Philadelphia
+ 418 │  2020      1  Region B  LIABILITIES             BUSINESS  Boston        ⋯
+ 419 │  2020      1  Region B  STATISTICS              HR        Chicago
+ 420 │  2020      1  Region B  ASSETS                  OTHERS    Minneapolis
                                                    1 column and 405 rows omitted</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; ########################
        ### Income Statement ###
        ########################
@@ -219,22 +219,22 @@
  Row │ FY     Qtr    Org       Accounts     TOTAL
      │ Int64  Int64  String    String       String
 ─────┼────────────────────────────────────────────────────
-   1 │  2020      1  Region B  ASSETS       USD 11142.44m
-   2 │  2020      1  Region B  LIABILITIES  USD 11163.71m
-   3 │  2020      1  Region B  NET_WORTH    USD 11966.09m
-   4 │  2020      1  Region B  REVENUE      USD 10880.9m
-   5 │  2020      1  Region B  LIABILITIES  USD 11739.11m
-   6 │  2020      1  Region B  ASSETS       USD 11323.61m
-   7 │  2020      1  Region B  REVENUE      USD 11862.4m
-   8 │  2020      1  Region B  REVENUE      USD 10665.14m
+   1 │  2020      1  Region B  LIABILITIES  USD 12768.44m
+   2 │  2020      1  Region B  NET_WORTH    USD 13499.34m
+   3 │  2020      1  Region B  NET_WORTH    USD 12099.88m
+   4 │  2020      1  Region B  LIABILITIES  USD 11484.86m
+   5 │  2020      1  Region B  ASSETS       USD 12274.09m
+   6 │  2020      1  Region B  LIABILITIES  USD 11617.84m
+   7 │  2020      1  Region B  NET_WORTH    USD 11411.07m
+   8 │  2020      1  Region B  ASSETS       USD 12781.2m
   ⋮  │   ⋮      ⋮       ⋮           ⋮             ⋮
- 234 │  2020      1  Region B  NET_WORTH    USD 11024.51m
- 235 │  2020      1  Region B  ASSETS       USD 11789.37m
- 236 │  2020      1  Region B  ASSETS       USD 12535.29m
- 237 │  2020      1  Region B  ASSETS       USD 12286.79m
- 238 │  2020      1  Region B  NET_WORTH    USD 12458.75m
- 239 │  2020      1  Region B  ASSETS       USD 12547.14m
- 240 │  2020      1  Region B  REVENUE      USD 11751.88m
+ 234 │  2020      1  Region B  NET_WORTH    USD 11496.22m
+ 235 │  2020      1  Region B  LIABILITIES  USD 11857.41m
+ 236 │  2020      1  Region B  LIABILITIES  USD 12326.16m
+ 237 │  2020      1  Region B  REVENUE      USD 10935.97m
+ 238 │  2020      1  Region B  ASSETS       USD 10607.67m
+ 239 │  2020      1  Region B  LIABILITIES  USD 11059.42m
+ 240 │  2020      1  Region B  ASSETS       USD 12439.36m
                                           225 rows omitted</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; ########################
        ##### CASH FLOW ########
        ########################
@@ -261,22 +261,22 @@
  Row │ FY     Qtr    Org       Accounts                TOTAL
      │ Int64  Int64  String    String                  String
 ─────┼───────────────────────────────────────────────────────────────
-   1 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 12527.77m
-   2 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 11708.42m
-   3 │  2020      1  Region B  OPERATING_EXPENSES      USD 13401.68m
-   4 │  2020      1  Region B  OPERATING_EXPENSES      USD 10966.12m
-   5 │  2020      1  Region B  OPERATING_EXPENSES      USD 12796.24m
-   6 │  2020      1  Region B  OPERATING_EXPENSES      USD 11504.36m
-   7 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 13350.65m
-   8 │  2020      1  Region B  OPERATING_EXPENSES      USD 11438.01m
+   1 │  2020      1  Region B  OPERATING_EXPENSES      USD 12555.49m
+   2 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 11605.1m
+   3 │  2020      1  Region B  OPERATING_EXPENSES      USD 11293.62m
+   4 │  2020      1  Region B  OPERATING_EXPENSES      USD 11044.87m
+   5 │  2020      1  Region B  OPERATING_EXPENSES      USD 11324.14m
+   6 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 10966.59m
+   7 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 12681.28m
+   8 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 11180.16m
   ⋮  │   ⋮      ⋮       ⋮                ⋮                   ⋮
- 114 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 12361.47m
- 115 │  2020      1  Region B  OPERATING_EXPENSES      USD 10789.02m
- 116 │  2020      1  Region B  OPERATING_EXPENSES      USD 10647.74m
- 117 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 11625.46m
- 118 │  2020      1  Region B  OPERATING_EXPENSES      USD 11246.31m
- 119 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 12213.82m
- 120 │  2020      1  Region B  OPERATING_EXPENSES      USD 12298.31m
+ 114 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 12131.92m
+ 115 │  2020      1  Region B  OPERATING_EXPENSES      USD 11081.52m
+ 116 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 13179.55m
+ 117 │  2020      1  Region B  OPERATING_EXPENSES      USD 10241.69m
+ 118 │  2020      1  Region B  OPERATING_EXPENSES      USD 12451.05m
+ 119 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 12485.48m
+ 120 │  2020      1  Region B  OPERATING_EXPENSES      USD 11771.16m
                                                      105 rows omitted</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; ########################
        ##### Ledger Visual ####
        ########################
@@ -339,4 +339,4 @@ in expression starting at REPL[44]:1</code><br/><code class="language-julia-repl
           &quot;Budget by $yr_p for $rg_p $ldescr $adescr $ddescr&quot;
           ],
          lw=3)</code><code class="nohighlight hljs ansi" style="display:block;">ERROR: LoadError: UndefVarError: `@df` not defined
-in expression starting at REPL[45]:1</code></pre><h2 id="Dynamic-roll-ups"><a class="docs-heading-anchor" href="#Dynamic-roll-ups">Dynamic roll ups</a><a id="Dynamic-roll-ups-1"></a><a class="docs-heading-anchor-permalink" href="#Dynamic-roll-ups" title="Permalink"></a></h2><h2 id="Invoices-by-Diversity-Vendor-groups"><a class="docs-heading-anchor" href="#Invoices-by-Diversity-Vendor-groups">Invoices by Diversity Vendor groups</a><a id="Invoices-by-Diversity-Vendor-groups-1"></a><a class="docs-heading-anchor-permalink" href="#Invoices-by-Diversity-Vendor-groups" title="Permalink"></a></h2><h2 id="Vendor-Ranking"><a class="docs-heading-anchor" href="#Vendor-Ranking">Vendor Ranking</a><a id="Vendor-Ranking-1"></a><a class="docs-heading-anchor-permalink" href="#Vendor-Ranking" title="Permalink"></a></h2><h2 id="Product-Ranking"><a class="docs-heading-anchor" href="#Product-Ranking">Product Ranking</a><a id="Product-Ranking-1"></a><a class="docs-heading-anchor-permalink" href="#Product-Ranking" title="Permalink"></a></h2><h2 id="Cost-per-Invoice"><a class="docs-heading-anchor" href="#Cost-per-Invoice">Cost per Invoice</a><a id="Cost-per-Invoice-1"></a><a class="docs-heading-anchor-permalink" href="#Cost-per-Invoice" title="Permalink"></a></h2><h2 id="Operating-Expenses-trend"><a class="docs-heading-anchor" href="#Operating-Expenses-trend">Operating Expenses trend</a><a id="Operating-Expenses-trend-1"></a><a class="docs-heading-anchor-permalink" href="#Operating-Expenses-trend" title="Permalink"></a></h2><h2 id="Supply-chain-Inventory-Dashboard"><a class="docs-heading-anchor" href="#Supply-chain-Inventory-Dashboard">Supply chain Inventory Dashboard</a><a id="Supply-chain-Inventory-Dashboard-1"></a><a class="docs-heading-anchor-permalink" href="#Supply-chain-Inventory-Dashboard" title="Permalink"></a></h2><p>below is an example dashboard (image) built in Pluto</p><p>This dashboard uses OnlineStats.jl for &quot;real-time&quot; udpates</p><p><img src="../../images/scm.png" alt="Inventory"/></p><h2 id="Balance-Sheet,-Income,-CashFlow-statement-with-Stock-prices,-Stock-volume-trading"><a class="docs-heading-anchor" href="#Balance-Sheet,-Income,-CashFlow-statement-with-Stock-prices,-Stock-volume-trading">Balance Sheet, Income, CashFlow statement with Stock prices, Stock volume trading</a><a id="Balance-Sheet,-Income,-CashFlow-statement-with-Stock-prices,-Stock-volume-trading-1"></a><a class="docs-heading-anchor-permalink" href="#Balance-Sheet,-Income,-CashFlow-statement-with-Stock-prices,-Stock-volume-trading" title="Permalink"></a></h2></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../selfservice/">« Self-Service Data Analytics</a><a class="docs-footer-nextpage" href="../mlforgl/">Machine Learning »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.23 on <span class="colophon-date" title="Friday 10 February 2023 18:25">Friday 10 February 2023</span>. Using Julia version 1.9.0-beta2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+in expression starting at REPL[45]:1</code></pre><h2 id="Dynamic-roll-ups"><a class="docs-heading-anchor" href="#Dynamic-roll-ups">Dynamic roll ups</a><a id="Dynamic-roll-ups-1"></a><a class="docs-heading-anchor-permalink" href="#Dynamic-roll-ups" title="Permalink"></a></h2><h2 id="Invoices-by-Diversity-Vendor-groups"><a class="docs-heading-anchor" href="#Invoices-by-Diversity-Vendor-groups">Invoices by Diversity Vendor groups</a><a id="Invoices-by-Diversity-Vendor-groups-1"></a><a class="docs-heading-anchor-permalink" href="#Invoices-by-Diversity-Vendor-groups" title="Permalink"></a></h2><h2 id="Vendor-Ranking"><a class="docs-heading-anchor" href="#Vendor-Ranking">Vendor Ranking</a><a id="Vendor-Ranking-1"></a><a class="docs-heading-anchor-permalink" href="#Vendor-Ranking" title="Permalink"></a></h2><h2 id="Product-Ranking"><a class="docs-heading-anchor" href="#Product-Ranking">Product Ranking</a><a id="Product-Ranking-1"></a><a class="docs-heading-anchor-permalink" href="#Product-Ranking" title="Permalink"></a></h2><h2 id="Cost-per-Invoice"><a class="docs-heading-anchor" href="#Cost-per-Invoice">Cost per Invoice</a><a id="Cost-per-Invoice-1"></a><a class="docs-heading-anchor-permalink" href="#Cost-per-Invoice" title="Permalink"></a></h2><h2 id="Operating-Expenses-trend"><a class="docs-heading-anchor" href="#Operating-Expenses-trend">Operating Expenses trend</a><a id="Operating-Expenses-trend-1"></a><a class="docs-heading-anchor-permalink" href="#Operating-Expenses-trend" title="Permalink"></a></h2><h2 id="Supply-chain-Inventory-Dashboard"><a class="docs-heading-anchor" href="#Supply-chain-Inventory-Dashboard">Supply chain Inventory Dashboard</a><a id="Supply-chain-Inventory-Dashboard-1"></a><a class="docs-heading-anchor-permalink" href="#Supply-chain-Inventory-Dashboard" title="Permalink"></a></h2><p>below is an example dashboard (image) built in Pluto</p><p>This dashboard uses OnlineStats.jl for &quot;real-time&quot; udpates</p><p><img src="../../images/scm.png" alt="Inventory"/></p><h2 id="Balance-Sheet,-Income,-CashFlow-statement-with-Stock-prices,-Stock-volume-trading"><a class="docs-heading-anchor" href="#Balance-Sheet,-Income,-CashFlow-statement-with-Stock-prices,-Stock-volume-trading">Balance Sheet, Income, CashFlow statement with Stock prices, Stock volume trading</a><a id="Balance-Sheet,-Income,-CashFlow-statement-with-Stock-prices,-Stock-volume-trading-1"></a><a class="docs-heading-anchor-permalink" href="#Balance-Sheet,-Income,-CashFlow-statement-with-Stock-prices,-Stock-volume-trading" title="Permalink"></a></h2></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../selfservice/">« Self-Service Data Analytics</a><a class="docs-footer-nextpage" href="../mlforgl/">Machine Learning »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.24 on <span class="colophon-date" title="Thursday 16 February 2023 16:13">Thursday 16 February 2023</span>. Using Julia version 1.9.0-beta2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

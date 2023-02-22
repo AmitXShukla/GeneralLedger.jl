@@ -207,22 +207,22 @@ ERROR: package `GeneralLedger [640f5719]` has same name or UUID as the active pr
      Row │ LEDGER   FISCAL_YEAR  PERIOD  ORGID     OPER_UNIT  ACCOUNT  DEPT    ⋯
          │ String   Int64        Int64   String    String     Int64    Int64   ⋯
 ─────────┼──────────────────────────────────────────────────────────────────────
-       1 │ Actuals         2020       1  ABC Inc.  Region A     24000   1300   ⋯
-       2 │ Actuals         2020       1  ABC Inc.  Region C     31000   1300
-       3 │ Actuals         2020       1  ABC Inc.  Region B     29000   1100
-       4 │ Actuals         2020       1  ABC Inc.  Region A     22000   1200
-       5 │ Actuals         2020       1  ABC Inc.  Region C     33000   1200   ⋯
-       6 │ Actuals         2020       1  ABC Inc.  Region B     14000   1400
-       7 │ Actuals         2020       1  ABC Inc.  Region C     25000   1300
-       8 │ Actuals         2020       1  ABC Inc.  Region B     18000   1300
+       1 │ Actuals         2020       1  ABC Inc.  Region B     32000   1100   ⋯
+       2 │ Actuals         2020       1  ABC Inc.  Region A     43000   1200
+       3 │ Actuals         2020       1  ABC Inc.  Region B     19000   1400
+       4 │ Actuals         2020       1  ABC Inc.  Region C     45000   1200
+       5 │ Actuals         2020       1  ABC Inc.  Region C     22000   1300   ⋯
+       6 │ Actuals         2020       1  ABC Inc.  Region C     14000   1200
+       7 │ Actuals         2020       1  ABC Inc.  Region B     38000   1500
+       8 │ Actuals         2020       1  ABC Inc.  Region C     33000   1500
     ⋮    │    ⋮          ⋮         ⋮        ⋮          ⋮         ⋮       ⋮     ⋱
- 2799994 │ Budget          2021      12  ABC Inc.  Region C     40000   1100   ⋯
- 2799995 │ Budget          2021      12  ABC Inc.  Region C     13000   1300
- 2799996 │ Budget          2021      12  ABC Inc.  Region C     20000   1200
+ 2799994 │ Budget          2021      12  ABC Inc.  Region C     27000   1400   ⋯
+ 2799995 │ Budget          2021      12  ABC Inc.  Region C     44000   1300
+ 2799996 │ Budget          2021      12  ABC Inc.  Region A     29000   1500
  2799997 │ Budget          2021      12  ABC Inc.  Region A     22000   1100
- 2799998 │ Budget          2021      12  ABC Inc.  Region C     26000   1400   ⋯
- 2799999 │ Budget          2021      12  ABC Inc.  Region A     37000   1300
- 2800000 │ Budget          2021      12  ABC Inc.  Region C     35000   1100
+ 2799998 │ Budget          2021      12  ABC Inc.  Region A     19000   1400   ⋯
+ 2799999 │ Budget          2021      12  ABC Inc.  Region A     43000   1300
+ 2800000 │ Budget          2021      12  ABC Inc.  Region C     32000   1500
                                               2 columns and 2799985 rows omitted</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; # create default binding values/params
        using PlutoUI</code><code class="nohighlight hljs ansi" style="display:block;"></code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; ## WARNING
        ## These bind variable will throw in error in documentation
@@ -310,22 +310,22 @@ ERROR: package `GeneralLedger [640f5719]` has same name or UUID as the active pr
  Row │ FY     Qtr    Org       Accounts                Dept      Loc           ⋯
      │ Int64  Int64  String    String                  String    String        ⋯
 ─────┼──────────────────────────────────────────────────────────────────────────
-   1 │  2020      1  Region B  LIABILITIES             SALES     Atlanta       ⋯
-   2 │  2020      1  Region B  OPERATING_EXPENSES      BUSINESS  Atlanta
-   3 │  2020      1  Region B  NON-OPERATING_EXPENSES  IT        St. Louis
-   4 │  2020      1  Region B  ASSETS                  HR        San Francisco
-   5 │  2020      1  Region B  STATISTICS              BUSINESS  Philadelphia  ⋯
-   6 │  2020      1  Region B  OPERATING_EXPENSES      IT        New York
-   7 │  2020      1  Region B  REVENUE                 OTHERS    Chicago
-   8 │  2020      1  Region B  NON-OPERATING_EXPENSES  HR        St. Louis
+   1 │  2020      1  Region B  NET_WORTH               SALES     Chicago       ⋯
+   2 │  2020      1  Region B  NON-OPERATING_EXPENSES  BUSINESS  San Francisco
+   3 │  2020      1  Region B  STATISTICS              OTHERS    Atlanta
+   4 │  2020      1  Region B  REVENUE                 SALES     Boston
+   5 │  2020      1  Region B  LIABILITIES             SALES     Dallas        ⋯
+   6 │  2020      1  Region B  LIABILITIES             OTHERS    San Francisco
+   7 │  2020      1  Region B  ASSETS                  IT        Kansas City
+   8 │  2020      1  Region B  REVENUE                 SALES     Minneapolis
   ⋮  │   ⋮      ⋮       ⋮                ⋮                ⋮            ⋮       ⋱
- 414 │  2020      1  Region B  OPERATING_EXPENSES      HR        Cleveland     ⋯
- 415 │  2020      1  Region B  REVENUE                 IT        Richmond
- 416 │  2020      1  Region B  LIABILITIES             OTHERS    Boston
- 417 │  2020      1  Region B  NON-OPERATING_EXPENSES  HR        New York
- 418 │  2020      1  Region B  NET_WORTH               BUSINESS  Dallas        ⋯
- 419 │  2020      1  Region B  NET_WORTH               IT        San Francisco
- 420 │  2020      1  Region B  NON-OPERATING_EXPENSES  BUSINESS  St. Louis
+ 414 │  2020      1  Region B  NET_WORTH               OTHERS    Boston        ⋯
+ 415 │  2020      1  Region B  NET_WORTH               IT        Cleveland
+ 416 │  2020      1  Region B  REVENUE                 BUSINESS  Minneapolis
+ 417 │  2020      1  Region B  NON-OPERATING_EXPENSES  IT        Minneapolis
+ 418 │  2020      1  Region B  REVENUE                 HR        Boston        ⋯
+ 419 │  2020      1  Region B  OPERATING_EXPENSES      HR        Cleveland
+ 420 │  2020      1  Region B  ASSETS                  BUSINESS  St. Louis
                                                    1 column and 405 rows omitted</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; ########################
        ### Income Statement ###
        ########################
@@ -352,22 +352,22 @@ ERROR: package `GeneralLedger [640f5719]` has same name or UUID as the active pr
  Row │ FY     Qtr    Org       Accounts     TOTAL
      │ Int64  Int64  String    String       String
 ─────┼────────────────────────────────────────────────────
-   1 │  2020      1  Region B  LIABILITIES  USD 12662.01m
-   2 │  2020      1  Region B  ASSETS       USD 13388.06m
-   3 │  2020      1  Region B  REVENUE      USD 12361.46m
-   4 │  2020      1  Region B  ASSETS       USD 11549.68m
-   5 │  2020      1  Region B  LIABILITIES  USD 12312.28m
-   6 │  2020      1  Region B  NET_WORTH    USD 11247.1m
-   7 │  2020      1  Region B  NET_WORTH    USD 14867.84m
-   8 │  2020      1  Region B  ASSETS       USD 11280.32m
+   1 │  2020      1  Region B  NET_WORTH    USD 12225.16m
+   2 │  2020      1  Region B  REVENUE      USD 12643.49m
+   3 │  2020      1  Region B  LIABILITIES  USD 12892.72m
+   4 │  2020      1  Region B  LIABILITIES  USD 10764.71m
+   5 │  2020      1  Region B  ASSETS       USD 12111.64m
+   6 │  2020      1  Region B  REVENUE      USD 12540.19m
+   7 │  2020      1  Region B  NET_WORTH    USD 11007.58m
+   8 │  2020      1  Region B  NET_WORTH    USD 13182.25m
   ⋮  │   ⋮      ⋮       ⋮           ⋮             ⋮
- 234 │  2020      1  Region B  ASSETS       USD 10676.58m
- 235 │  2020      1  Region B  NET_WORTH    USD 10057.94m
- 236 │  2020      1  Region B  NET_WORTH    USD 11581.68m
- 237 │  2020      1  Region B  REVENUE      USD 11861.98m
- 238 │  2020      1  Region B  LIABILITIES  USD 12839.36m
- 239 │  2020      1  Region B  NET_WORTH    USD 11931.64m
- 240 │  2020      1  Region B  NET_WORTH    USD 10763.58m
+ 234 │  2020      1  Region B  LIABILITIES  USD 11106.92m
+ 235 │  2020      1  Region B  NET_WORTH    USD 11067.28m
+ 236 │  2020      1  Region B  NET_WORTH    USD 13042.37m
+ 237 │  2020      1  Region B  NET_WORTH    USD 10276.45m
+ 238 │  2020      1  Region B  REVENUE      USD 12719.45m
+ 239 │  2020      1  Region B  REVENUE      USD 12698.35m
+ 240 │  2020      1  Region B  ASSETS       USD 12186.37m
                                           225 rows omitted</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; ########################
        ##### CASH FLOW ########
        ########################
@@ -394,22 +394,22 @@ ERROR: package `GeneralLedger [640f5719]` has same name or UUID as the active pr
  Row │ FY     Qtr    Org       Accounts                TOTAL
      │ Int64  Int64  String    String                  String
 ─────┼───────────────────────────────────────────────────────────────
-   1 │  2020      1  Region B  OPERATING_EXPENSES      USD 12337.18m
-   2 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 11777.93m
-   3 │  2020      1  Region B  OPERATING_EXPENSES      USD 12476.2m
-   4 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 12191.5m
-   5 │  2020      1  Region B  OPERATING_EXPENSES      USD 10899.38m
-   6 │  2020      1  Region B  OPERATING_EXPENSES      USD 13902.2m
-   7 │  2020      1  Region B  OPERATING_EXPENSES      USD 11281.84m
-   8 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 12277.53m
+   1 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 11920.44m
+   2 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 10853.52m
+   3 │  2020      1  Region B  OPERATING_EXPENSES      USD 12810.65m
+   4 │  2020      1  Region B  OPERATING_EXPENSES      USD 12477.57m
+   5 │  2020      1  Region B  OPERATING_EXPENSES      USD 10831.13m
+   6 │  2020      1  Region B  OPERATING_EXPENSES      USD 11898.31m
+   7 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 11699.14m
+   8 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 10637.26m
   ⋮  │   ⋮      ⋮       ⋮                ⋮                   ⋮
- 114 │  2020      1  Region B  OPERATING_EXPENSES      USD 11899.01m
- 115 │  2020      1  Region B  OPERATING_EXPENSES      USD 11088.07m
- 116 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 11726.11m
- 117 │  2020      1  Region B  OPERATING_EXPENSES      USD 9673.4m
- 118 │  2020      1  Region B  OPERATING_EXPENSES      USD 11324.96m
- 119 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 11391.34m
- 120 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 10367.22m
+ 114 │  2020      1  Region B  OPERATING_EXPENSES      USD 11309.25m
+ 115 │  2020      1  Region B  OPERATING_EXPENSES      USD 13624.4m
+ 116 │  2020      1  Region B  OPERATING_EXPENSES      USD 12374.09m
+ 117 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 11478.34m
+ 118 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 11197.15m
+ 119 │  2020      1  Region B  NON-OPERATING_EXPENSES  USD 11914.0m
+ 120 │  2020      1  Region B  OPERATING_EXPENSES      USD 11563.69m
                                                      105 rows omitted</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; ########################
        ##### Ledger Visual ####
        ########################
@@ -472,4 +472,4 @@ in expression starting at REPL[44]:1</code><br/><code class="language-julia-repl
        			&quot;Budget by $yr_p for $rg_p $ldescr $adescr $ddescr&quot;
        			],
        		lw=3)</code><code class="nohighlight hljs ansi" style="display:block;">ERROR: LoadError: UndefVarError: `@df` not defined
-in expression starting at REPL[45]:1</code></pre><h2 id="SEC-Filings"><a class="docs-heading-anchor" href="#SEC-Filings">SEC Filings</a><a id="SEC-Filings-1"></a><a class="docs-heading-anchor-permalink" href="#SEC-Filings" title="Permalink"></a></h2><h2 id="Stock-prices"><a class="docs-heading-anchor" href="#Stock-prices">Stock prices</a><a id="Stock-prices-1"></a><a class="docs-heading-anchor-permalink" href="#Stock-prices" title="Permalink"></a></h2><h2 id="volume-charts"><a class="docs-heading-anchor" href="#volume-charts">volume charts</a><a id="volume-charts-1"></a><a class="docs-heading-anchor-permalink" href="#volume-charts" title="Permalink"></a></h2></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../installation/">« Installing Julia</a><a class="docs-footer-nextpage" href="../plots/">Visualizations »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.23 on <span class="colophon-date" title="Friday 10 February 2023 18:25">Friday 10 February 2023</span>. Using Julia version 1.9.0-beta2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+in expression starting at REPL[45]:1</code></pre><h2 id="SEC-Filings"><a class="docs-heading-anchor" href="#SEC-Filings">SEC Filings</a><a id="SEC-Filings-1"></a><a class="docs-heading-anchor-permalink" href="#SEC-Filings" title="Permalink"></a></h2><h2 id="Stock-prices"><a class="docs-heading-anchor" href="#Stock-prices">Stock prices</a><a id="Stock-prices-1"></a><a class="docs-heading-anchor-permalink" href="#Stock-prices" title="Permalink"></a></h2><h2 id="volume-charts"><a class="docs-heading-anchor" href="#volume-charts">volume charts</a><a id="volume-charts-1"></a><a class="docs-heading-anchor-permalink" href="#volume-charts" title="Permalink"></a></h2></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../installation/">« Installing Julia</a><a class="docs-footer-nextpage" href="../plots/">Visualizations »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.24 on <span class="colophon-date" title="Thursday 16 February 2023 16:13">Thursday 16 February 2023</span>. Using Julia version 1.9.0-beta2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

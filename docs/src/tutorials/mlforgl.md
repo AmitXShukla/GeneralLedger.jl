@@ -94,6 +94,20 @@ for example: height of one person in a concert may be anywhere within possible h
     y = f(5, 6) = 5.5
 ```
 
+```julia
+using CairoMakie;
+f = Figure(backgroundcolor = :lightgrey, resolution=(600,400));
+ax = Axis(f[1,1], title="Discrete & Continuous functions");
+
+x = 1:0.1:10;
+
+lines!(x, x.^2, label="Continuous function");
+scatter!(rand(4,2).*40, label="Discrete function", color=:red);
+axislegend();
+
+f
+```
+
 ```@eval
 using CairoMakie;
 f = Figure(backgroundcolor = :lightgrey, resolution=(600,400));
@@ -103,11 +117,11 @@ lines!(x, x.^2, label="Continuous function");
 scatter!(rand(4,2).*40, label="Discrete function", color=:red);
 axislegend();
 
-save("discrete_continuous.png", f);
+save("../assets/discrete_continuous.png", f);
 nothing
 ```
 
-![](discrete_continuous.png)
+![](../assets/discrete_continuous.png)
 
 ## Using Functions
 
@@ -135,6 +149,13 @@ Let's take an example,
 
 Time taken to travel between two cities via Air, Bus, Train or personal vehicle depends mostly depends on speed and distance. However, there are other factors like weather, season, population or faults, which may occasionally impact travel time.
 However, knowing intensity of these factors, it's still possible to predict time taken rationally.
+
+```julia
+using GeneralLedger, DataFrames
+df = GeneralLedger.getSampleDataTimeTaken(5)
+select!(df, :, :ETA => (x -> round.(x, digits=2)) => :ETA)
+df
+```
 
 ```@eval
 using GeneralLedger, DataFrames, Latexify

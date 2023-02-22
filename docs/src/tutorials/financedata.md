@@ -52,19 +52,34 @@ C|MSFT|3.3|
 C|NIKE|3.3|
 ..|..|..|
 
-```@example
-using UnicodePlots; # hide
+```julia
+using UnicodePlots;
 
-tbl = (group=["A","A","B","B","B","C","C"], stock=["AAPL","TSLA","GOOG","TSLA","NIKE","MSFT","NIKE"], ROI=[5.6,5.6,4.3,4.3,4.3,3.3,3.3]); # hide
-dataROI = barplot(string.(tbl.group,"|",tbl.stock), tbl.ROI, ylabel="group", xlabel="ROI %", title="ROI Data", color=:red); # hide
-dataROI
+tbl = (group=["A","A","B","B","B","C","C"],
+        stock=["AAPL","TSLA","GOOG","TSLA","NIKE","MSFT","NIKE"],
+        ROI=[5.6,5.6,4.3,4.3,4.3,3.3,3.3]);
+
+barplot(string.(tbl.group,"|",tbl.stock), tbl.ROI,        
+            ylabel="group", xlabel="ROI %", title="ROI Data", color=:red)
 ```
 
 ```@example
 using UnicodePlots; # hide
 
-continuosROI = histogram(randn(100_000) .* .1, nbins=40, vertical=true, height=10); # hide
-continuosROI
+tbl = (group=["A","A","B","B","B","C","C"], stock=["AAPL","TSLA","GOOG","TSLA","NIKE","MSFT","NIKE"], ROI=[5.6,5.6,4.3,4.3,4.3,3.3,3.3]); # hide
+barplot(string.(tbl.group,"|",tbl.stock), tbl.ROI, ylabel="group", xlabel="ROI %", title="ROI Data", color=:red); # hide
+```
+
+```julia
+using UnicodePlots;
+
+histogram(randn(100_000) .* .1, nbins=40,    
+        vertical=true, height=10)
+```
+
+```@example
+using UnicodePlots; # hide
+histogram(randn(100_000) .* .1, nbins=40, vertical=true, height=10); # hide
 ```
 
 ## Categorical Data
@@ -182,6 +197,27 @@ Calculation Steps:
 
 Let's look at few sample results produced by different deposit types.
 
+```julia
+using GeneralLedger, UnicodePlots, DataFrames, Statistics
+
+sampleSize = 100000;
+df = GeneralLedger.getSampleDepositsData(sampleSize);
+
+select!(df, :,
+    [:deposit, :rate] => ByRow((x1, x2)
+        -> contains(x1, "MF") ? x2 :
+        string(x1,"-",x2)) => :depositType);
+
+dfG = groupby(df, :depositType);
+dfT = sort(combine(dfG, :Total => mean),[:depositType]);
+
+select!(dfT, :, :Total_mean => (x -> round.(x, digits=2)) =>    
+        :Total_mean)
+
+first(dfT, 9)
+```
+
+
 ```@eval
 using GeneralLedger, UnicodePlots, DataFrames, Statistics, Latexify
 
@@ -216,10 +252,63 @@ Let's take a closer look at few `Univariate & Multivariate statistical analysis`
 
 for example, Amount received after a buddy deposit depends on interest rate and time.
 
+```julia
+using GeneralLedger, CairoMakie;
+
+fileName = "../assets/bd_appendPlt1.gif";
+
+rate = [1.875, 2.875, 3.875, 4.875, 5.875];
+deposit = GeneralLedger.Deposit(100_000.0, rate[1], 1.0, 60.0);
+points1 = Observable(Point2f[(0, 0)]);
+points2 = Observable(Point2f[(0, 0)]);
+points3 = Observable(Point2f[(0, 0)]);
+points4 = Observable(Point2f[(0, 0)]);
+points5 = Observable(Point2f[(0, 0)]);
+# titleText = Observable(0.0) # uncomment to display $$ in title
+
+fig, ax = scatter(points1;
+            figure = (;backgroundcolor = :lightgrey, resolution=(600,600)),
+            axis = (;
+            title="Return by deposit",
+            # title = @lift("Total Return = $($titleText)"),
+            xlabel="time (months)",
+            ylabel="Amount (100k)",
+            xticklabelrotation=pi/3,
+            yticklabelrotation=pi/3,
+            limits = (0, 72, 90, 150)
+            ), label = "\$ $(deposit.principal/1000) k @ $(rate[1]) % simple interest");
+scatter!(ax, points2; label = "\$ $(deposit.principal/1000) k @ $(rate[2]) % simple interest");
+scatter!(ax, points3; label = "\$ $(deposit.principal/1000) k @ $(rate[3]) % simple interest");
+scatter!(ax, points4; label = "\$ $(deposit.principal/1000) k @ $(rate[4]) % simple interest");
+scatter!(ax, points5; label = "\$ $(deposit.principal/1000) k @ $(rate[5]) % simple interest");
+axislegend();
+
+frames = 1:60;
+
+record(fig, fileName, frames;
+        framerate = 10) do t
+    deposit.time = t
+    deposit.rate = rate[1]
+    points1[] = push!(points1[], Point2f(t, GeneralLedger.getSampleBDeposit(deposit)[2]/1000))
+    deposit.rate = rate[2]
+    points2[] = push!(points2[], Point2f(t, GeneralLedger.getSampleBDeposit(deposit)[2]/1000))
+    deposit.rate = rate[3]
+    points3[] = push!(points3[], Point2f(t, GeneralLedger.getSampleBDeposit(deposit)[2]/1000))
+    deposit.rate = rate[4]
+    points4[] = push!(points4[], Point2f(t, GeneralLedger.getSampleBDeposit(deposit)[2]/1000))
+    deposit.rate = rate[5]
+    points5[] = push!(points5[], Point2f(t, GeneralLedger.getSampleBDeposit(deposit)[2]/1000))
+    # titleText[] = round(new_point[2], digits=2)
+end
+nothing
+
+## display file = fileName
+```
+
 ```@eval
 using GeneralLedger, CairoMakie;
 
-fileName = "bd_appendPlt1.gif";
+fileName = "../assets/bd_appendPlt1.gif";
 
 rate = [1.875, 2.875, 3.875, 4.875, 5.875];
 deposit = GeneralLedger.Deposit(100_000.0, rate[1], 1.0, 60.0);
@@ -267,14 +356,67 @@ end
 nothing
 ```
 
-![](bd_appendPlt1.gif)
+![](../assets/bd_appendPlt1.gif)
 
 for example, Amount received after a certificate deposit depends on interest rate, compound type and time.
+
+```julia
+using GeneralLedger, CairoMakie;
+
+fileName = "../assets/bd_appendPlt2.gif";
+
+rate = [1.875, 2.875, 3.875, 4.875, 5.875];
+deposit = GeneralLedger.Deposit(100_000.0, rate[1], 1.0, 60.0);
+points1 = Observable(Point2f[(0, 0)]);
+points2 = Observable(Point2f[(0, 0)]);
+points3 = Observable(Point2f[(0, 0)]);
+points4 = Observable(Point2f[(0, 0)]);
+points5 = Observable(Point2f[(0, 0)]);
+# titleText = Observable(0.0) # uncomment to display $$ in title
+
+fig, ax = scatter(points1;
+            figure = (;backgroundcolor = :lightgrey, resolution=(600,600)),
+            axis = (;
+            title="Return by deposit (Simple compound)",
+            # title = @lift("Total Return = $($titleText)"),
+            xlabel="time (months)",
+            ylabel="Amount (100k)",
+            xticklabelrotation=pi/3,
+            yticklabelrotation=pi/3,
+            limits = (0, 72, 90, 150)
+            ), label = "\$ $(deposit.principal/1000) k @ $(rate[1]) % CD interest");
+scatter!(ax, points2; label = "\$ $(deposit.principal/1000) k @ $(rate[2]) % CD interest");
+scatter!(ax, points3; label = "\$ $(deposit.principal/1000) k @ $(rate[3]) % CD interest");
+scatter!(ax, points4; label = "\$ $(deposit.principal/1000) k @ $(rate[4]) % CD interest");
+scatter!(ax, points5; label = "\$ $(deposit.principal/1000) k @ $(rate[5]) % CD interest");
+axislegend();
+
+frames = 1:60;
+
+record(fig, fileName, frames;
+        framerate = 10) do t
+    deposit.time = t
+    deposit.rate = rate[1]
+    points1[] = push!(points1[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.rate = rate[2]
+    points2[] = push!(points2[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.rate = rate[3]
+    points3[] = push!(points3[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.rate = rate[4]
+    points4[] = push!(points4[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.rate = rate[5]
+    points5[] = push!(points5[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    # titleText[] = round(new_point[2], digits=2)
+end
+nothing
+
+## display file = fileName
+```
 
 ```@eval
 using GeneralLedger, CairoMakie;
 
-fileName = "bd_appendPlt2.gif";
+fileName = "../assets/bd_appendPlt2.gif";
 
 rate = [1.875, 2.875, 3.875, 4.875, 5.875];
 deposit = GeneralLedger.Deposit(100_000.0, rate[1], 1.0, 60.0);
@@ -322,14 +464,65 @@ end
 nothing
 ```
 
-![](bd_appendPlt2.gif)
+![](../assets/bd_appendPlt2.gif)
 
 Amount received after a certificate deposit depends on different compound interest rate type and time.
+
+```julia
+using GeneralLedger, CairoMakie;
+
+fileName = "../assets/bd_appendPlt3.gif";
+
+rate = [1.875, 2.875, 3.875, 4.875, 5.875];
+compound = [1.0, 4.0, 12.0, 365.0]
+deposit = GeneralLedger.Deposit(100_000.0, rate[3], 1.0, 60.0);
+points1 = Observable(Point2f[(0, 0)]);
+points2 = Observable(Point2f[(0, 0)]);
+points3 = Observable(Point2f[(0, 0)]);
+points4 = Observable(Point2f[(0, 0)]);
+points5 = Observable(Point2f[(0, 0)]);
+# titleText = Observable(0.0) # uncomment to display $$ in title
+
+fig, ax = scatter(points1;
+            figure = (;backgroundcolor = :lightgrey, resolution=(600,600)),
+            axis = (;
+            title="Return by deposit ($(rate[3]) , different compound types)",
+            # title = @lift("Total Return = $($titleText)"),
+            xlabel="time (months)",
+            ylabel="Amount (100k)",
+            xticklabelrotation=pi/3,
+            yticklabelrotation=pi/3,
+            limits = (0, 72, 100, 130)
+            ), label = "\$ $(deposit.principal/1000) k @ annual compound interest");
+scatter!(ax, points2; label = "\$ $(deposit.principal/1000) k @ qtr compound interest");
+scatter!(ax, points3; label = "\$ $(deposit.principal/1000) k @ monthly compound interest");
+scatter!(ax, points4; label = "\$ $(deposit.principal/1000) k daily compound interest");
+axislegend();
+
+frames = 1:60;
+
+record(fig, fileName, frames;
+        framerate = 10) do t
+    deposit.time = t
+    deposit.compound = compound[1]
+    points1[] = push!(points1[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.compound = compound[2]
+    points2[] = push!(points2[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.compound = compound[3]
+    points3[] = push!(points3[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    deposit.compound = compound[4]
+    points4[] = push!(points4[], Point2f(t, GeneralLedger.getSampleCDeposit(deposit)[2]/1000))
+    # titleText[] = round(new_point[2], digits=2)
+end
+nothing
+
+## display file = fileName
+```
 
 ```@eval
 using GeneralLedger, CairoMakie;
 
-fileName = "bd_appendPlt3.gif";
+fileName = "../assets/bd_appendPlt3.gif";
 
 rate = [1.875, 2.875, 3.875, 4.875, 5.875];
 compound = [1.0, 4.0, 12.0, 365.0]
@@ -375,4 +568,4 @@ end
 nothing
 ```
 
-![](bd_appendPlt3.gif)
+![](../assets/bd_appendPlt3.gif)
